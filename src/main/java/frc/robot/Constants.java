@@ -18,6 +18,12 @@ public final class Constants {
   public static final Mode simMode = Mode.SIM;
   public static final Mode currentMode = RobotBase.isReal() ? Mode.REAL : simMode;
 
+  public static final class CANMapping {
+
+
+        public static final int INTAKE_DRIVE = 5;
+  }
+
   public static enum Mode {
     /** Running on a real robot. */
     REAL,
