@@ -42,6 +42,11 @@ public class DriveConstants {
   public static final int frontRightDriveCanId = 32;
   public static final int backRightDriveCanId = 33;
 
+  public static final int frontLeftTurnCANcoderCanId = 21;
+  public static final int backLeftTurnCANcoderCanId = 24;
+  public static final int frontRightTurnCANcoderCanId = 22;
+  public static final int backRightTurnCANcoderCanId = 23;
+
   public static final int frontLeftTurnCanId = 11;
   public static final int backLeftTurnCanId = 14;
   public static final int frontRightTurnCanId = 12;
