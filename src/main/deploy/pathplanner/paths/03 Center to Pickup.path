@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 7.304858974358975,
+        "y": 7.2560128205128205
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 7.311309969761319,
+        "y": 6.644193080617308
+      },
+      "isLocked": false,
+      "linkedName": "Launch to Center End"
+    },
+    {
+      "anchor": {
+        "x": 7.304858974358975,
+        "y": 4.639666666666667
+      },
+      "prevControl": {
+        "x": 7.301049092947067,
+        "y": 5.185969589209791
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "Center to Pickup End"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -88.49256424122481
+  },
+  "reversed": false,
+  "folder": "Learning Path",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": -90.0
+  },
+  "useDefaultConstraints": true
+}

@@ -1,0 +1,82 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 2.5461091340450777,
+        "y": 5.9339976275207595
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 3.0916026064015405,
+        "y": 6.786769965711818
+      },
+      "isLocked": false,
+      "linkedName": "Start to Launch End"
+    },
+    {
+      "anchor": {
+        "x": 3.6650652431791224,
+        "y": 7.36497034400949
+      },
+      "prevControl": {
+        "x": 3.4748214400408575,
+        "y": 7.202775105585271
+      },
+      "nextControl": {
+        "x": 3.855309046317388,
+        "y": 7.5271655824337085
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 7.304858974358975,
+        "y": 7.2560128205128205
+      },
+      "prevControl": {
+        "x": 7.24787663107948,
+        "y": 7.795338078291815
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "Launch to Center End"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.7,
+      "rotationDegrees": -90.0
+    }
+  ],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [
+    {
+      "name": "RunIntakeAutonCommand",
+      "waypointRelativePos": 1.5778816199376964,
+      "endWaypointRelativePos": null,
+      "command": null
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -90.0
+  },
+  "reversed": false,
+  "folder": "Learning Path",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": -46.7899106082461
+  },
+  "useDefaultConstraints": true
+}

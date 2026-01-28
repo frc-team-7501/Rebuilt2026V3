@@ -33,6 +33,7 @@ import edu.wpi.first.wpilibj.Alert;
 import edu.wpi.first.wpilibj.Alert.AlertType;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
@@ -98,7 +99,9 @@ public class Drive extends SubsystemBase {
     PathPlannerLogging.setLogActivePathCallback(
         (activePath) -> {
           Logger.recordOutput("Odometry/Trajectory", activePath.toArray(new Pose2d[0]));
+          Logger.recordOutput("field",  activePath.toArray(new Pose2d[0]));
         });
+    
     PathPlannerLogging.setLogTargetPoseCallback(
         (targetPose) -> {
           Logger.recordOutput("Odometry/TrajectorySetpoint", targetPose);
@@ -125,6 +128,8 @@ public class Drive extends SubsystemBase {
       module.periodic();
     }
     odometryLock.unlock();
+
+    Logger.recordOutput("Swerve/RobotPose", getPose());
 
     // Stop moving when disabled
     if (DriverStation.isDisabled()) {
