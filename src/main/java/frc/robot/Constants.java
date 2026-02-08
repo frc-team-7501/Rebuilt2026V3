@@ -19,10 +19,21 @@ public final class Constants {
   public static final Mode currentMode = RobotBase.isReal() ? Mode.REAL : simMode;
 
   public static final class CANMapping {
-
-
         public static final int INTAKE_DRIVE = 5;
   }
+
+  public static final class ControllerMapping {
+    public static final int XBOX = 0;
+    public static final int BBOARD = 1;
+  }
+
+  public static final class ButtonBoardMapping {
+    // Button board is labeled -1 from these values, 0=1, 1=2, etc. 
+    public static final int PLACEHOLDERWPI0 = 0;
+    public static final int INTAKEOUT = 1;
+    public static final int INTAKEIN = 2;
+  }
+
 
   public static enum Mode {
     /** Running on a real robot. */
