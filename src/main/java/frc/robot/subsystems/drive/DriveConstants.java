@@ -38,18 +38,18 @@ public class DriveConstants {
   public static final int pigeonCanId = 20;
 
   public static final int frontLeftDriveCanId = 31;
-  public static final int backLeftDriveCanId = 34;
   public static final int frontRightDriveCanId = 32;
+  public static final int backLeftDriveCanId = 34;
   public static final int backRightDriveCanId = 33;
 
   public static final int frontLeftTurnCANcoderCanId = 21;
-  public static final int backLeftTurnCANcoderCanId = 24;
   public static final int frontRightTurnCANcoderCanId = 22;
+  public static final int backLeftTurnCANcoderCanId = 24;
   public static final int backRightTurnCANcoderCanId = 23;
 
   public static final int frontLeftTurnCanId = 11;
-  public static final int backLeftTurnCanId = 14;
   public static final int frontRightTurnCanId = 12;
+  public static final int backLeftTurnCanId = 14;
   public static final int backRightTurnCanId = 13;
 
   // Drive motor configuration
@@ -80,7 +80,7 @@ public class DriveConstants {
   public static final boolean turnInverted = false;
   public static final int turnMotorCurrentLimit = 20;
   public static final double turnMotorReduction = 150 / 7;
-  public static final DCMotor turnGearbox = DCMotor.getNeo550(1);
+  public static final DCMotor turnGearbox = DCMotor.getNEO(1);
 
   // Turn encoder configuration
   public static final boolean turnEncoderInverted = true;

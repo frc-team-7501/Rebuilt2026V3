@@ -30,26 +30,24 @@ public class GyroIONavX implements GyroIO {
 
   public GyroIONavX() {
     yawTimestampQueue = SparkOdometryThread.getInstance().makeTimestampQueue();
-    //yawPositionQueue = SparkOdometryThread.getInstance().registerSignal(navX::getAngle);
     yawPositionQueue = SparkOdometryThread.getInstance().registerSignal(() -> navX.getYaw().in(Degrees));
   }
 
   @Override
   public void updateInputs(GyroIOInputs inputs) {
     inputs.connected = true;
-    inputs.yawPosition = Rotation2d.fromDegrees(navX.getYaw().in(Degrees));
-   // inputs.yawVelocityRadPerSec = Units.degreesToRadians(-navX.getAngularVel()[3].in(DegreesPerSecond));
+    inputs.yawPosition = Rotation2d.fromDegrees(-navX.getYaw().in(Degrees));
     Velocity = navX.getAngularVel();
-    inputs.yawVelocityRadPerSec = Velocity[2].in(DegreesPerSecond);
+    inputs.yawVelocityRadPerSec = -Velocity[2].in(DegreesPerSecond);
 
-    SmartDashboard.putNumber("GyroAngle", navX.getYaw().in(Degrees));
-    SmartDashboard.putNumber("GyroZ", Velocity[2].in(DegreesPerSecond));
+    SmartDashboard.putNumber("GyroAngle", -navX.getYaw().in(Degrees));
+    SmartDashboard.putNumber("GyroZ", inputs.yawVelocityRadPerSec);
 
     inputs.odometryYawTimestamps =
         yawTimestampQueue.stream().mapToDouble((Double value) -> value).toArray();
     inputs.odometryYawPositions =
         yawPositionQueue.stream()
-            .map((Double value) -> Rotation2d.fromDegrees(-value))
+            .map((Double value) -> Rotation2d.fromDegrees(value))
             .toArray(Rotation2d[]::new);
     yawTimestampQueue.clear();
     yawPositionQueue.clear();
