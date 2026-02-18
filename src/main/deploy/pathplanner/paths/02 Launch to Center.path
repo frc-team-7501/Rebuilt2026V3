@@ -54,14 +54,14 @@
   "pointTowardsZones": [],
   "eventMarkers": [
     {
-      "name": "RunIntakeAutonCommand",
+      "name": "",
       "waypointRelativePos": 1.5778816199376964,
       "endWaypointRelativePos": null,
       "command": null
     }
   ],
   "globalConstraints": {
-    "maxVelocity": 3.0,
+    "maxVelocity": 1.0,
     "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
@@ -78,5 +78,5 @@
     "velocity": 0,
     "rotation": -46.7899106082461
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

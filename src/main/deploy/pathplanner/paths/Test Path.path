@@ -3,45 +3,34 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.5467141162514837,
-        "y": 6.321328588374851
+        "x": 2.1535641025641037,
+        "y": 7.0
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.8699568845406165,
-        "y": 6.203390883335493
+        "x": 2.407534799234896,
+        "y": 6.847723321580669
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "TestStart"
     },
     {
       "anchor": {
-        "x": 2.5461091340450777,
-        "y": 5.9339976275207595
+        "x": 2.5372948717948725,
+        "y": 7.0
       },
       "prevControl": {
-        "x": 3.0925709667484242,
-        "y": 6.2066506775595895
+        "x": 2.3758772745195196,
+        "y": 7.334203334829868
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Start to Launch End"
+      "linkedName": "TestEnd"
     }
   ],
   "rotationTargets": [],
   "constraintZones": [],
-  "pointTowardsZones": [
-    {
-      "fieldPosition": {
-        "x": 4.6,
-        "y": 4.0
-      },
-      "rotationOffset": 0.0,
-      "minWaypointRelativePos": 1.0,
-      "maxWaypointRelativePos": 1.0,
-      "name": "Point Towards Zone"
-    }
-  ],
+  "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 1.0,
@@ -53,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -46.7899106082461
+    "rotation": 0.0
   },
   "reversed": false,
-  "folder": "Learning Path",
+  "folder": "New Folder",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -90.0
+    "rotation": 0.0
   },
   "useDefaultConstraints": true
 }

@@ -56,7 +56,6 @@ public class RobotContainer {
     private final Handoff handoff = Handoff.getInstance();
     private final Launcher launcher = Launcher.getInstance();
 
-
     // Controller
     private final CommandXboxController xBox = new CommandXboxController(ControllerMapping.XBOX);
     private final GenericHID bboard = new GenericHID(ControllerMapping.BBOARD);
@@ -108,8 +107,17 @@ public class RobotContainer {
         }
 
         // Named Commands
-        NamedCommands.registerCommand("RunIntakeAutonCommand", new IntakeControlCommand(intake, 0.5));
-        NamedCommands.registerCommand("StopIntakeAutonCommand", new IntakeControlCommand(intake, 0.0));
+        // Run auxiliary commands
+        NamedCommands.registerCommand("IntakeRunCommand", new IntakeControlCommand(intake, -1.0));
+        NamedCommands.registerCommand("HandoffRunCommand", new HandoffControlCommand(handoff, -1.0));
+        NamedCommands.registerCommand("LauncherRunCommand", new LauncherPIDControlCommand(launcher, 5));
+        NamedCommands.registerCommand("SpindexerRunCommand", new SpindexerControlCommand(spindexer, -0.25));
+        // Stop auxiliary commands
+        NamedCommands.registerCommand("IntakeStopCommand", new IntakeControlCommand(intake, 0.0));
+        NamedCommands.registerCommand("HandoffStopCommand", new HandoffControlCommand(handoff, 0.0));
+        NamedCommands.registerCommand("LauncherStopCommand", new LauncherPIDControlCommand(launcher, 0));
+        NamedCommands.registerCommand("SpindexerStopCommand", new SpindexerControlCommand(spindexer, 0.0));
+        
 
         // Set up auto routines
         autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
@@ -151,8 +159,8 @@ public class RobotContainer {
         drive.setDefaultCommand(
                 DriveCommands.joystickDrive(
                         drive,
-                        () -> -xBox.getLeftY(),
-                        () -> -xBox.getLeftX(),
+                        () -> xBox.getLeftY(),
+                        () -> xBox.getLeftX(),
                         () -> -xBox.getRightX()));
 
         // Lock to 0° when A button is held
@@ -161,8 +169,8 @@ public class RobotContainer {
                 .whileTrue(
                         DriveCommands.joystickDriveAtAngle(
                                 drive,
-                                () -> -xBox.getLeftY(),
-                                () -> -xBox.getLeftX(),
+                                () -> xBox.getLeftY(),
+                                () -> xBox.getLeftX(),
                                 () -> Rotation2d.kZero));
 
         // Switch to X pattern when X button is pressed
@@ -181,42 +189,43 @@ public class RobotContainer {
                                 .ignoringDisable(true));
 
         // Intake control
-        // new JoystickButton(bboard, ButtonBoardMapping.INTAKESTOP)
-        //         .onTrue(new IntakeControlCommand(intake, 0.0));
+        new JoystickButton(bboard, 7)
+                .onTrue(new IntakeControlCommand(intake, 0.0));
 
-        // new JoystickButton(bboard, ButtonBoardMapping.INTAKERUN)
-        //         .onTrue(new IntakeControlCommand(intake, -0.5));
+        new JoystickButton(bboard, 6)
+                .onTrue(new IntakeControlCommand(intake, -1.0));
 
-        // new JoystickButton(bboard, ButtonBoardMapping.SPINDEXERSTOP)
-        //         .onTrue(new SpindexerControlCommand(spindexer, 0.0));
+        // Spindexer control
+        // Un Jam
+        new JoystickButton(bboard, 3)
+                .onTrue(new SpindexerControlCommand(spindexer, 0.1));
+        new JoystickButton(bboard, 3)
+                .onFalse(new ParallelCommandGroup(
+                        new HandoffControlCommand(handoff, 0.1),
+                        new SpindexerControlCommand(spindexer, -0.1)));
 
-        // new JoystickButton(bboard, ButtonBoardMapping.SPINDEXERRUN)
-        //         .onTrue(new SpindexerControlCommand(spindexer, -0.1));
+        // Spindexer Normal
+        new JoystickButton(bboard, 4)
+                .onTrue(new ParallelCommandGroup(
+                        new HandoffControlCommand(handoff, 0.1),
+                        new SpindexerControlCommand(spindexer, -0.1)));
 
-        // new JoystickButton(bboard, ButtonBoardMapping.HANDOFFSTOP)
-        //         .onTrue(new HandoffControlCommand(handoff, 0.0));
-
-        // new JoystickButton(bboard, ButtonBoardMapping.HANDOFFRUN)
-        //         .onTrue(new HandoffControlCommand(handoff, -0.5));
-
-        // new JoystickButton(bboard, ButtonBoardMapping.LAUNCHERRUN)
-        //         .onTrue(new LauncherPIDControlCommand(launcher, 10));
-
-        // new JoystickButton(bboard, ButtonBoardMapping.LAUNCHERSTOP)
-        //         .onTrue(new LauncherPIDControlCommand(launcher, 0));
+        // Launcher Spin
         new JoystickButton(bboard, 1)
-                 .onTrue(new LauncherPIDControlCommand(launcher, 30));
+                .onTrue(new LauncherPIDControlCommand(launcher, 15));
 
+        // All Spin
         new JoystickButton(bboard, 2)
-                 .onTrue(new ParallelCommandGroup(
-                    new HandoffControlCommand(handoff, -1.0),
-                    new SpindexerControlCommand(spindexer, -0.25)));
+                .onTrue(new ParallelCommandGroup(
+                        new HandoffControlCommand(handoff, -1.0),
+                        new SpindexerControlCommand(spindexer, -0.25)));
 
+        // Stop All
         new JoystickButton(bboard, 5)
-                 .onTrue(new ParallelCommandGroup(
-                    new LauncherPIDControlCommand(launcher, 0),
-                    new HandoffControlCommand(handoff, 0.0),
-                    new SpindexerControlCommand(spindexer, 0.0)));
+                .onTrue(new ParallelCommandGroup(
+                        new LauncherPIDControlCommand(launcher, 0),
+                        new HandoffControlCommand(handoff, 0.1),
+                        new SpindexerControlCommand(spindexer, -0.10)));
     }
 
     /**

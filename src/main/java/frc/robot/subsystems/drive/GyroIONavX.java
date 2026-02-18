@@ -9,17 +9,13 @@ package frc.robot.subsystems.drive;
 
 import static edu.wpi.first.units.Units.Degrees;
 import static edu.wpi.first.units.Units.DegreesPerSecond;
-import static edu.wpi.first.units.Units.RadiansPerSecond;
-import static frc.robot.subsystems.drive.DriveConstants.*;
 
 import com.studica.frc.Navx;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import java.util.Queue;
-import java.util.function.DoubleSupplier;
 
 /** IO implementation for NavX. */
 public class GyroIONavX implements GyroIO {
