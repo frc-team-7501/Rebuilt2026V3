@@ -12,6 +12,8 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
+import edu.wpi.first.units.measure.Velocity;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.CANMapping;
 
@@ -34,12 +36,13 @@ public class Launcher extends SubsystemBase {
 
     // PID values
     launcherMotorLConfig.closedLoop
-        .p(0.0)
+        .p(0.0005)
         .i(0.0)
         .d(0.0)
         .outputRange(-1, 1)
-        .feedForward.kV(565);
+        .feedForward.kV(0.0001754);
 
+    launcherMotorLConfig.smartCurrentLimit(80);
     launcherMotorL.configure(launcherMotorLConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     
     // Top motor follows the bottom motor.
@@ -68,6 +71,10 @@ public class Launcher extends SubsystemBase {
 
   @Override
   public void periodic() {
+    SmartDashboard.putNumber("Launch Output", launcherMotorL.getAppliedOutput());
+        SmartDashboard.putNumber("Launch Vel", launcherMotorL.getEncoder().getVelocity());
+    //SmartDashboard.putNumber("Launcher Vel", launcherMotorLPID.get);
+
     // This method will be called once per scheduler run
   }
 }

@@ -110,7 +110,7 @@ public class RobotContainer {
         // Run auxiliary commands
         NamedCommands.registerCommand("IntakeRunCommand", new IntakeControlCommand(intake, -1.0));
         NamedCommands.registerCommand("HandoffRunCommand", new HandoffControlCommand(handoff, -1.0));
-        NamedCommands.registerCommand("LauncherRunCommand", new LauncherPIDControlCommand(launcher, 5));
+        NamedCommands.registerCommand("LauncherRunCommand", new LauncherPIDControlCommand(launcher, 0.5));
         NamedCommands.registerCommand("SpindexerRunCommand", new SpindexerControlCommand(spindexer, -0.25));
         // Stop auxiliary commands
         NamedCommands.registerCommand("IntakeStopCommand", new IntakeControlCommand(intake, 0.0));
@@ -212,13 +212,13 @@ public class RobotContainer {
 
         // Launcher Spin
         new JoystickButton(bboard, 1)
-                .onTrue(new LauncherPIDControlCommand(launcher, 15));
+                .onTrue(new LauncherPIDControlCommand(launcher, 4800));
 
         // All Spin
         new JoystickButton(bboard, 2)
                 .onTrue(new ParallelCommandGroup(
                         new HandoffControlCommand(handoff, -1.0),
-                        new SpindexerControlCommand(spindexer, -0.25)));
+                        new SpindexerControlCommand(spindexer, -0.20)));
 
         // Stop All
         new JoystickButton(bboard, 5)
