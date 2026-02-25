@@ -9,6 +9,8 @@ package frc.robot;
 
 import com.revrobotics.util.StatusLogger;
 
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -39,6 +41,7 @@ import org.littletonrobotics.urcl.URCL;
 public class Robot extends LoggedRobot {
   private Command autonomousCommand;
   private RobotContainer robotContainer;
+  UsbCamera visionCamera;
 
   public Robot() {
     // // Record metadata
@@ -87,6 +90,7 @@ public class Robot extends LoggedRobot {
     // Instantiate our RobotContainer. This will perform all our button bindings,
     // and put our autonomous chooser on the dashboard.
     robotContainer = new RobotContainer();
+    visionCamera = CameraServer.startAutomaticCapture(0);
   }
 
   /** This function is called periodically during all modes. */
