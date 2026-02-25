@@ -51,7 +51,6 @@ public class ModuleIOSpark implements ModuleIO {
 
   // Closed loop controllers
   private final SparkClosedLoopController driveController;
-  private final SparkClosedLoopController turnController;
 
   // Queue inputs from odometry thread
   private final Queue<Double> timestampQueue;
@@ -104,7 +103,6 @@ public class ModuleIOSpark implements ModuleIO {
             });
     driveEncoder = driveSpark.getEncoder();
     driveController = driveSpark.getClosedLoopController();
-    turnController = turnSpark.getClosedLoopController();
 
     // Configure drive motor
     var driveConfig = new SparkFlexConfig();
