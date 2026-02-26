@@ -4,22 +4,22 @@
 
 package frc.robot.commands;
 
+//import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.accessories.Intake;
+import frc.robot.subsystems.accessories.IntakeDeploy;
 import frc.robot.subsystems.accessories.Sensors;
 
-public class IntakeControlCommand extends Command {
-  /** Creates a new LaunchCommand. */
-  private final Intake Intake;
-  private double intakeSpeed;
+public class IntakeDeployCommand extends Command {
+  /** Creates a new LiftControlCommand. */
+  private final IntakeDeploy intakeDeploy;
+  private final boolean position;
   private Sensors sensors;
 
-  public IntakeControlCommand(Intake intake, Double IntakeSpeed, Sensors sensors) {
+  public IntakeDeployCommand(IntakeDeploy intakeDeploy, boolean position, Sensors sensors) {
     // Use addRequirements() here to declare subsystem dependencies.
-    this.Intake = intake;
-    this.intakeSpeed = IntakeSpeed;
-    this.sensors = sensors;
-    addRequirements(intake);
+    this.intakeDeploy = intakeDeploy;
+    this.position = position;
+    addRequirements(intakeDeploy);
   }
 
   // Called when the command is initially scheduled.
@@ -30,13 +30,14 @@ public class IntakeControlCommand extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-      Intake.runIntake(intakeSpeed, sensors);
+    // Set to zero to compensate for stick drift
+    intakeDeploy.moveIntake(position, sensors);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    Intake.stop();
+    intakeDeploy.stop();
   }
 
   // Returns true when the command should end.

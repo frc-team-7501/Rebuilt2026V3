@@ -8,10 +8,14 @@ import com.ctre.phoenix6.hardware.TalonFX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.CANMapping;
+import frc.robot.Constants.MiscMapping;
+
 
 public class Intake extends SubsystemBase {
   private final TalonFX m_IntakeMotor = new TalonFX(CANMapping.INTAKE_DRIVE);
   private static Intake instance;
+  private Sensors sensors;
+  private boolean intakePosition;
   
   /** Creates a new Intake. */
   public Intake() {
@@ -23,8 +27,15 @@ public class Intake extends SubsystemBase {
     return instance;
   }
 
-  public void runIntake(double IntakePower) {    
-      m_IntakeMotor.set(IntakePower); 
+  public void runIntake(double IntakePower, Sensors sensors) { 
+      this.sensors = sensors;
+      intakePosition = sensors.getIntakePosition();
+      if (intakePosition = MiscMapping.INTAKE_IN) {
+        m_IntakeMotor.set(0.0); // Intake Stop
+      } else {
+        m_IntakeMotor.set(IntakePower); 
+      }
+      
   }
 
   @Override

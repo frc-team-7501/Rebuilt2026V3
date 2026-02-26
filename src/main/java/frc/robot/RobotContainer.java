@@ -30,6 +30,7 @@ import frc.robot.commands.SpindexerControlCommand;
 import frc.robot.subsystems.accessories.Handoff;
 import frc.robot.subsystems.accessories.Intake;
 import frc.robot.subsystems.accessories.Launcher;
+import frc.robot.subsystems.accessories.Sensors;
 import frc.robot.subsystems.accessories.Spindexer;
 import frc.robot.subsystems.accessories.Vision;
 import frc.robot.subsystems.drive.Drive;
@@ -54,6 +55,7 @@ public class RobotContainer {
     // Subsystems
     private final Drive drive;
     private Vision vision;
+    private Sensors sensors = Sensors.getInstance();
     private final Intake intake = Intake.getInstance();
     private final Spindexer spindexer = Spindexer.getInstance();
     private final Handoff handoff = Handoff.getInstance();
@@ -115,12 +117,12 @@ public class RobotContainer {
 
         // Named Commands
         // Run auxiliary commands
-        NamedCommands.registerCommand("IntakeRunCommand", new IntakeControlCommand(intake, -1.0));
+        NamedCommands.registerCommand("IntakeRunCommand", new IntakeControlCommand(intake, -1.0, sensors));
         NamedCommands.registerCommand("HandoffRunCommand", new HandoffControlCommand(handoff, -1.0));
         NamedCommands.registerCommand("LauncherRunCommand", new LauncherPIDControlCommand(launcher, 0.5));
         NamedCommands.registerCommand("SpindexerRunCommand", new SpindexerControlCommand(spindexer, -0.25));
         // Stop auxiliary commands
-        NamedCommands.registerCommand("IntakeStopCommand", new IntakeControlCommand(intake, 0.0));
+        NamedCommands.registerCommand("IntakeStopCommand", new IntakeControlCommand(intake, 0.0, sensors));
         NamedCommands.registerCommand("HandoffStopCommand", new HandoffControlCommand(handoff, 0.0));
         NamedCommands.registerCommand("LauncherStopCommand", new LauncherPIDControlCommand(launcher, 0));
         NamedCommands.registerCommand("SpindexerStopCommand", new SpindexerControlCommand(spindexer, 0.0));
@@ -197,10 +199,10 @@ public class RobotContainer {
 
         // Intake control
         new JoystickButton(bboard, 7)
-                .onTrue(new IntakeControlCommand(intake, 0.0));
+                .onTrue(new IntakeControlCommand(intake, 0.0, sensors));
 
         new JoystickButton(bboard, 6)
-                .onTrue(new IntakeControlCommand(intake, -1.0));
+                .onTrue(new IntakeControlCommand(intake, -1.0, sensors));
 
         // Spindexer control
         // Un Jam

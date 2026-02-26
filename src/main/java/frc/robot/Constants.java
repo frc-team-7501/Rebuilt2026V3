@@ -46,11 +46,18 @@ public final class Constants {
   
   public static final class CANMapping {
     public static final int INTAKE_DRIVE = 25;
+    public static final int INTAKE_DEPLOY = 26;
     public static final int SPINDEXER_DRIVE = 15;
     public static final int HANDOFF_DRIVE = 16;
     public static final int LAUNCHER_DRIVE_L = 18;
     public static final int LAUNCHER_DRIVE_R = 17;
- 
+  }
+
+  public static final class MiscMapping {
+    public static final boolean INTAKE_OUT = true;
+    public static final boolean INTAKE_IN = false;
+    public static final double INTAKE_OUT_POSITION = 100.0;
+    public static final double INTAKE_IN_POSITION= 0.0;
   }
 
   public static final class ControllerMapping {
