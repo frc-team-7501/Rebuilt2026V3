@@ -56,7 +56,7 @@ public final class Constants {
   public static final class MiscMapping {
     public static final boolean INTAKE_OUT = true;
     public static final boolean INTAKE_IN = false;
-    public static final double INTAKE_OUT_POSITION = 100.0;
+    public static final double INTAKE_OUT_POSITION = -15.0;
     public static final double INTAKE_IN_POSITION= 0.0;
   }
 

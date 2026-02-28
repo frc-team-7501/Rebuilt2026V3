@@ -18,17 +18,21 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.ButtonBoardMapping;
 import frc.robot.Constants.ControllerMapping;
+import frc.robot.Constants.MiscMapping;
 import frc.robot.commands.DriveCommands;
 import frc.robot.commands.HandoffControlCommand;
 import frc.robot.commands.IntakeControlCommand;
+import frc.robot.commands.IntakeDeployCommand;
 import frc.robot.commands.LauncherPIDControlCommand;
 import frc.robot.commands.SpindexerControlCommand;
 import frc.robot.subsystems.accessories.Handoff;
 import frc.robot.subsystems.accessories.Intake;
+import frc.robot.subsystems.accessories.IntakeDeploy;
 import frc.robot.subsystems.accessories.Launcher;
 import frc.robot.subsystems.accessories.Sensors;
 import frc.robot.subsystems.accessories.Spindexer;
@@ -57,6 +61,7 @@ public class RobotContainer {
     private Vision vision;
     private Sensors sensors = Sensors.getInstance();
     private final Intake intake = Intake.getInstance();
+    private final IntakeDeploy intakeDeploy = IntakeDeploy.getInstance();
     private final Spindexer spindexer = Spindexer.getInstance();
     private final Handoff handoff = Handoff.getInstance();
     private final Launcher launcher = Launcher.getInstance();
@@ -203,10 +208,22 @@ public class RobotContainer {
                                 .ignoringDisable(true));
 
         // Intake control
+        // new JoystickButton(bboard, 7)
+        //         .onTrue(new IntakeControlCommand(intake, 0.0, sensors));
+
+        // new JoystickButton(bboard, 6)
+        //         .onTrue(new IntakeControlCommand(intake, -0.75, sensors));
         new JoystickButton(bboard, 7)
-                .onTrue(new IntakeControlCommand(intake, 0.0, sensors));
+                .onTrue(new ParallelCommandGroup(
+                        new IntakeControlCommand(intake, 0.0, sensors),
+                        new IntakeDeployCommand(intakeDeploy, MiscMapping.INTAKE_IN, sensors)));
 
         new JoystickButton(bboard, 6)
+                .onTrue(new ParallelCommandGroup(
+                        new IntakeControlCommand(intake, -1.0, sensors),
+                        new IntakeDeployCommand(intakeDeploy, MiscMapping.INTAKE_OUT, sensors)));
+
+        new JoystickButton(bboard, 8)
                 .onTrue(new IntakeControlCommand(intake, -1.0, sensors));
 
         // Spindexer control

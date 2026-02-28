@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems.accessories;
 
+import com.revrobotics.PersistMode;
+import com.revrobotics.ResetMode;
 import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
@@ -18,7 +20,6 @@ import frc.robot.Constants.MiscMapping;
 public class IntakeDeploy extends SubsystemBase {
   /** Creates a new IntakeDeployer. */
   private final SparkMax intakeDeployMotor;
-  private Sensors sensors;
   private static IntakeDeploy instance;
   private SparkClosedLoopController intakeDeployMotorPID;
   private SparkMaxConfig intakeDeployMotorConfig;
@@ -31,10 +32,14 @@ public class IntakeDeploy extends SubsystemBase {
 
     // PID values
     intakeDeployMotorConfig.closedLoop
-        .p(0.006)
+        .p(0.05)
         .i(0.0)
         .d(0.0)
-        .outputRange(-0.5, 0.5);
+        .outputRange(-0.2, 0.2);
+
+    intakeDeployMotorConfig.closedLoopRampRate(1);
+
+    intakeDeployMotor.configure(intakeDeployMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
   }
 
   public void resetEncoder() {
@@ -51,6 +56,7 @@ public class IntakeDeploy extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("IntakePosition", getIntakePosition());
+    SmartDashboard.putNumber("DeployMotorPower", intakeDeployMotor.getAppliedOutput());
   }
 
   public double getIntakePosition() {
@@ -59,20 +65,18 @@ public class IntakeDeploy extends SubsystemBase {
 
   // Manual command
   public void moveIntake(boolean position, Sensors sensors) {
-    this.sensors = sensors;
-    if (position = MiscMapping.INTAKE_OUT) {
+    if (position == MiscMapping.INTAKE_OUT) {
       intakeDeployMotorPID.setSetpoint(MiscMapping.INTAKE_OUT_POSITION, ControlType.kPosition);
-      sensors.setIntakePosition(position);
     } else {
       intakeDeployMotorPID.setSetpoint(MiscMapping.INTAKE_IN_POSITION, ControlType.kPosition);
-      sensors.setIntakePosition(position);
     }
+    sensors.setIntakePosition(position);
   }
 
-  // PID command
-  public void pidSetPosition(double position) {
-    intakeDeployMotorPID.setSetpoint(position, ControlType.kPosition);
-  }
+  // // PID command
+  // public void pidSetPosition(double position) {
+  // intakeDeployMotorPID.setSetpoint(position, ControlType.kPosition);
+  // }
 
   public void stop() {
     intakeDeployMotor.stopMotor();

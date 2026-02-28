@@ -34,6 +34,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 
 import java.util.List;
@@ -115,7 +116,9 @@ public class Vision {
 
                         estConsumer.accept(est.estimatedPose.toPose2d(), est.timestampSeconds, estStdDevs);
                     });
+             SmartDashboard.putString("VisionPose", photonEstimator.estimateLowestAmbiguityPose(result).toString());          
         }
+        SmartDashboard.putString("BLAH", "BLAH");
     }
 
     /**

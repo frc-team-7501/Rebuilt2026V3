@@ -19,6 +19,7 @@ public class IntakeDeployCommand extends Command {
     // Use addRequirements() here to declare subsystem dependencies.
     this.intakeDeploy = intakeDeploy;
     this.position = position;
+    this.sensors = sensors;
     addRequirements(intakeDeploy);
   }
 
@@ -30,7 +31,6 @@ public class IntakeDeployCommand extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // Set to zero to compensate for stick drift
     intakeDeploy.moveIntake(position, sensors);
   }
 
