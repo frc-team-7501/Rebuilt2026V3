@@ -90,6 +90,7 @@ public class Vision {
     }
 
     public void periodic() {
+        SmartDashboard.putBoolean("Vision Periodic", true);
         Optional<EstimatedRobotPose> visionEst = Optional.empty();
         for (var result : camera.getAllUnreadResults()) {
             visionEst = photonEstimator.estimateCoprocMultiTagPose(result);

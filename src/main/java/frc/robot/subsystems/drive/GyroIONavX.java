@@ -9,6 +9,7 @@ package frc.robot.subsystems.drive;
 
 import static edu.wpi.first.units.Units.Degrees;
 import static edu.wpi.first.units.Units.DegreesPerSecond;
+import static frc.robot.subsystems.drive.DriveConstants.GyroCanId;
 
 import com.studica.frc.Navx;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -19,7 +20,7 @@ import java.util.Queue;
 
 /** IO implementation for NavX. */
 public class GyroIONavX implements GyroIO {
-  private final Navx navX = new Navx(0);
+  private final Navx navX = new Navx(GyroCanId);
   private AngularVelocity[] Velocity;
   private final Queue<Double> yawPositionQueue;
   private final Queue<Double> yawTimestampQueue;

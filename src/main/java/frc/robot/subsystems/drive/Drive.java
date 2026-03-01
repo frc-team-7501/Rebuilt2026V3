@@ -176,6 +176,7 @@ public class Drive extends SubsystemBase {
 
       // Apply update
       poseEstimator.updateWithTime(sampleTimestamps[i], rawGyroRotation, modulePositions);
+      
       field.setRobotPose(getPose());//MDH
       SmartDashboard.putData("Field",field);//MDH
     }
