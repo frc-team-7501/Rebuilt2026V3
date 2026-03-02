@@ -41,7 +41,7 @@ import org.littletonrobotics.urcl.URCL;
 public class Robot extends LoggedRobot {
   private Command autonomousCommand;
   private RobotContainer robotContainer;
-  UsbCamera visionCamera;
+  //UsbCamera visionCamera;
 
   public Robot() {
     // // Record metadata

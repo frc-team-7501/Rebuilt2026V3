@@ -39,6 +39,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.Constants;
+import frc.robot.Constants.MiscMapping;
 import frc.robot.Constants.Mode;
 import frc.robot.util.LocalADStarAK;
 import java.util.concurrent.locks.Lock;
@@ -179,6 +180,11 @@ public class Drive extends SubsystemBase {
       
       field.setRobotPose(getPose());//MDH
       SmartDashboard.putData("Field",field);//MDH
+      
+      SmartDashboard.putNumber("pose X", getPose().getX());
+      SmartDashboard.putNumber("pose Y", getPose().getY());
+      SmartDashboard.putNumber("pose Z", getPose().getRotation().getDegrees());
+      SmartDashboard.putNumber("distance from HUB", getTargetRange());
     }
 
     // Update gyro alert
@@ -323,4 +329,22 @@ public class Drive extends SubsystemBase {
   public double getMaxAngularSpeedRadPerSec() {
     return maxSpeedMetersPerSec / driveBaseRadius;
   }
+
+  /** Returns the Hub distance in Meters from the robot. */
+  public double getTargetRange() {
+    return (Math.sqrt(
+      Math.pow(
+        (MiscMapping.BOTH_Y_HUB_TARGET - getPose().getY()), 2) + 
+      Math.pow(
+        (MiscMapping.RED_X_HUB_TARGET - getPose().getX()), 2)));
+  }
+
+  /** Returns the Rotation2d of the Target from the robot. */
+  public Rotation2d getRotationFromTarget() {
+    final Rotation2d rotation = 
+    Rotation2d.fromRadians(Math.atan2((MiscMapping.BOTH_Y_HUB_TARGET - getPose().getY()), (MiscMapping.RED_X_HUB_TARGET - getPose().getX())));
+    return rotation;
+  }
+
+
 }

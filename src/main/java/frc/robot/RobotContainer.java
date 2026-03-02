@@ -37,12 +37,16 @@ import frc.robot.subsystems.accessories.Launcher;
 import frc.robot.subsystems.accessories.Sensors;
 import frc.robot.subsystems.accessories.Spindexer;
 import frc.robot.subsystems.accessories.Vision;
+import frc.robot.subsystems.accessories.VisionConstants;
+import frc.robot.subsystems.accessories.VisionIOPhotonVision;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.GyroIO;
 import frc.robot.subsystems.drive.GyroIONavX;
 import frc.robot.subsystems.drive.ModuleIO;
 import frc.robot.subsystems.drive.ModuleIOSim;
 import frc.robot.subsystems.drive.ModuleIOSpark;
+
+import static frc.robot.Constants.Vision.kCameraName;
 
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
@@ -88,6 +92,7 @@ public class RobotContainer {
                         new ModuleIOSpark(1),
                         new ModuleIOSpark(2),
                         new ModuleIOSpark(3));
+                vision = new Vision(drive::addVisionMeasurement, new VisionIOPhotonVision(kCameraName, VisionConstants.robotToCamera0));
                 break;
 
             case SIM:
@@ -116,9 +121,6 @@ public class RobotContainer {
                         });
                 break;
         }
-
-        vision = new Vision(drive::addVisionMeasurement);
-
 
         // Named Commands
         // Run auxiliary commands
@@ -163,6 +165,7 @@ public class RobotContainer {
 
         // Configure the button bindings
         configureButtonBindings();
+        
     }
 
     /**
@@ -184,13 +187,13 @@ public class RobotContainer {
 
         // Lock to 0° when A button is held
         xBox
-                .a()
+                .leftBumper()
                 .whileTrue(
                         DriveCommands.joystickDriveAtAngle(
                                 drive,
                                 () -> xBox.getLeftY(),
                                 () -> xBox.getLeftX(),
-                                () -> Rotation2d.kZero));
+                                () -> drive.getRotationFromTarget()));
 
         // Switch to X pattern when X button is pressed
         xBox.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
@@ -208,11 +211,6 @@ public class RobotContainer {
                                 .ignoringDisable(true));
 
         // Intake control
-        // new JoystickButton(bboard, 7)
-        //         .onTrue(new IntakeControlCommand(intake, 0.0, sensors));
-
-        // new JoystickButton(bboard, 6)
-        //         .onTrue(new IntakeControlCommand(intake, -0.75, sensors));
         new JoystickButton(bboard, 7)
                 .onTrue(new ParallelCommandGroup(
                         new IntakeControlCommand(intake, 0.0, sensors),
@@ -220,26 +218,26 @@ public class RobotContainer {
 
         new JoystickButton(bboard, 6)
                 .onTrue(new ParallelCommandGroup(
-                        new IntakeControlCommand(intake, -1.0, sensors),
+                        new IntakeControlCommand(intake, MiscMapping.INTAKESPEED, sensors),
                         new IntakeDeployCommand(intakeDeploy, MiscMapping.INTAKE_OUT, sensors)));
 
         new JoystickButton(bboard, 8)
-                .onTrue(new IntakeControlCommand(intake, -1.0, sensors));
+                .onTrue(new IntakeControlCommand(intake, MiscMapping.INTAKESPEED, sensors));
 
         // Spindexer control
         // Un Jam
         new JoystickButton(bboard, 3)
-                .onTrue(new SpindexerControlCommand(spindexer, 0.1));
+                .onTrue(new SpindexerControlCommand(spindexer, MiscMapping.SPINDEXERREVERSE));
         new JoystickButton(bboard, 3)
                 .onFalse(new ParallelCommandGroup(
-                        new HandoffControlCommand(handoff, 0.1),
-                        new SpindexerControlCommand(spindexer, -0.1)));
+                        new HandoffControlCommand(handoff, MiscMapping.HANDOFFSPEED),
+                        new SpindexerControlCommand(spindexer, MiscMapping.SPINDEXERIDLE)));
 
         // Spindexer Normal
         new JoystickButton(bboard, 4)
                 .onTrue(new ParallelCommandGroup(
-                        new HandoffControlCommand(handoff, 0.1),
-                        new SpindexerControlCommand(spindexer, -0.1)));
+                        new HandoffControlCommand(handoff, MiscMapping.HANDOFFIDLE),
+                        new SpindexerControlCommand(spindexer, MiscMapping.SPINDEXERIDLE)));
 
         // Launcher Spin
         new JoystickButton(bboard, 1)
@@ -248,15 +246,15 @@ public class RobotContainer {
         // All Spin
         new JoystickButton(bboard, 2)
                 .onTrue(new ParallelCommandGroup(
-                        new HandoffControlCommand(handoff, -1.0),
-                        new SpindexerControlCommand(spindexer, -0.20)));
+                        new HandoffControlCommand(handoff, MiscMapping.HANDOFFSPEED),
+                        new SpindexerControlCommand(spindexer, MiscMapping.SPINDEXERSPEED)));
 
         // Stop All
         new JoystickButton(bboard, 5)
                 .onTrue(new ParallelCommandGroup(
                         new LauncherPIDControlCommand(launcher, 0),
-                        new HandoffControlCommand(handoff, 0.1),
-                        new SpindexerControlCommand(spindexer, -0.10)));
+                        new HandoffControlCommand(handoff, MiscMapping.HANDOFFIDLE),
+                        new SpindexerControlCommand(spindexer, MiscMapping.SPINDEXERIDLE)));
     }
 
     /**

@@ -56,8 +56,17 @@ public final class Constants {
   public static final class MiscMapping {
     public static final boolean INTAKE_OUT = true;
     public static final boolean INTAKE_IN = false;
+    public static final double HANDOFFSPEED = -1.0;
+    public static final double HANDOFFIDLE = 0.1;
+    public static final double INTAKESPEED = -1.0;
+    public static final double SPINDEXERIDLE = -0.0;
+    public static final double SPINDEXERREVERSE = 0.2;
+    public static final double SPINDEXERSPEED = -0.4;
     public static final double INTAKE_OUT_POSITION = -15.0;
-    public static final double INTAKE_IN_POSITION= 0.0;
+    public static final double INTAKE_IN_POSITION = 0.0;
+    public static final double BLUE_X_HUB_TARGET = 4.623;
+    public static final double RED_X_HUB_TARGET = 11.917;
+    public static final double BOTH_Y_HUB_TARGET = 4.040;
   }
 
   public static final class ControllerMapping {

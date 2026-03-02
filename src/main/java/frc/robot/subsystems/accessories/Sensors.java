@@ -4,12 +4,14 @@
 
 package frc.robot.subsystems.accessories;
 
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Sensors extends SubsystemBase {
 
   private boolean intakePosition;
   private static Sensors instance;
+  public Rotation2d targetRotation;
 
   /** Creates a new Sensors. */
   public Sensors() {
@@ -34,5 +36,14 @@ public class Sensors extends SubsystemBase {
   }
   public boolean getIntakePosition() {
     return intakePosition;
+  }
+
+  public void setTargetRotation() {
+    // if (alliance == blue) {
+    //   blueXTargetMeters - photonxdistance, yMeters
+    // }
+  }
+  public Rotation2d getTargetRotation() {
+    return targetRotation;
   }
 }
