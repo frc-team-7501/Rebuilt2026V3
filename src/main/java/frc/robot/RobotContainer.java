@@ -251,6 +251,8 @@ public class RobotContainer {
 		// Launcher Spin
 		new JoystickButton(bboard, ButtonBoardMapping.LAUNCHERRUN)
 				.onTrue(new LauncherPIDControlCommand(launcher, drive::getVelocityForTarget));
+		xBox.a()
+				.onTrue(new LauncherPIDControlCommand(launcher, ()->2400));
 		// Launcher Stop
 		new JoystickButton(bboard, ButtonBoardMapping.LAUNCHERSTOP)
 				.onTrue(new LauncherPIDControlCommand(launcher, () -> 0.0));
