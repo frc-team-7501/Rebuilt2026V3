@@ -53,21 +53,22 @@ public class Drive extends SubsystemBase {
   private final GyroIOInputsAutoLogged gyroInputs = new GyroIOInputsAutoLogged();
   private final Module[] modules = new Module[4]; // FL, FR, BL, BR
   private final SysIdRoutine sysId;
-  private final Alert gyroDisconnectedAlert =
-      new Alert("Disconnected gyro, using kinematics as fallback.", AlertType.kError);
-  private final Field2d field = new Field2d(); //MDH
+  private final Alert gyroDisconnectedAlert = new Alert("Disconnected gyro, using kinematics as fallback.",
+      AlertType.kError);
+  public double distanceFromTarget = 0.0;
+  private final Field2d field = new Field2d(); // MDH
 
   private SwerveDriveKinematics kinematics = new SwerveDriveKinematics(moduleTranslations);
   private Rotation2d rawGyroRotation = Rotation2d.kZero;
   private SwerveModulePosition[] lastModulePositions = // For delta tracking
       new SwerveModulePosition[] {
-        new SwerveModulePosition(),
-        new SwerveModulePosition(),
-        new SwerveModulePosition(),
-        new SwerveModulePosition()
+          new SwerveModulePosition(),
+          new SwerveModulePosition(),
+          new SwerveModulePosition(),
+          new SwerveModulePosition()
       };
-  private SwerveDrivePoseEstimator poseEstimator =
-      new SwerveDrivePoseEstimator(kinematics, rawGyroRotation, lastModulePositions, Pose2d.kZero);
+  private SwerveDrivePoseEstimator poseEstimator = new SwerveDrivePoseEstimator(kinematics, rawGyroRotation,
+      lastModulePositions, Pose2d.kZero);
 
   public Drive(
       GyroIO gyroIO,
@@ -102,24 +103,23 @@ public class Drive extends SubsystemBase {
     PathPlannerLogging.setLogActivePathCallback(
         (activePath) -> {
           Logger.recordOutput("Odometry/Trajectory", activePath.toArray(new Pose2d[0]));
-          Logger.recordOutput("field",  activePath.toArray(new Pose2d[0]));
+          Logger.recordOutput("field", activePath.toArray(new Pose2d[0]));
         });
-    
+
     PathPlannerLogging.setLogTargetPoseCallback(
         (targetPose) -> {
           Logger.recordOutput("Odometry/TrajectorySetpoint", targetPose);
         });
 
     // Configure SysId
-    sysId =
-        new SysIdRoutine(
-            new SysIdRoutine.Config(
-                null,
-                null,
-                null,
-                (state) -> Logger.recordOutput("Drive/SysIdState", state.toString())),
-            new SysIdRoutine.Mechanism(
-                (voltage) -> runCharacterization(voltage.in(Volts)), null, this));
+    sysId = new SysIdRoutine(
+        new SysIdRoutine.Config(
+            null,
+            null,
+            null,
+            (state) -> Logger.recordOutput("Drive/SysIdState", state.toString())),
+        new SysIdRoutine.Mechanism(
+            (voltage) -> runCharacterization(voltage.in(Volts)), null, this));
   }
 
   @Override
@@ -148,8 +148,7 @@ public class Drive extends SubsystemBase {
     }
 
     // Update odometry
-    double[] sampleTimestamps =
-        modules[0].getOdometryTimestamps(); // All signals are sampled together
+    double[] sampleTimestamps = modules[0].getOdometryTimestamps(); // All signals are sampled together
     int sampleCount = sampleTimestamps.length;
     for (int i = 0; i < sampleCount; i++) {
       // Read wheel positions and deltas from each module
@@ -157,11 +156,10 @@ public class Drive extends SubsystemBase {
       SwerveModulePosition[] moduleDeltas = new SwerveModulePosition[4];
       for (int moduleIndex = 0; moduleIndex < 4; moduleIndex++) {
         modulePositions[moduleIndex] = modules[moduleIndex].getOdometryPositions()[i];
-        moduleDeltas[moduleIndex] =
-            new SwerveModulePosition(
-                modulePositions[moduleIndex].distanceMeters
-                    - lastModulePositions[moduleIndex].distanceMeters,
-                modulePositions[moduleIndex].angle);
+        moduleDeltas[moduleIndex] = new SwerveModulePosition(
+            modulePositions[moduleIndex].distanceMeters
+                - lastModulePositions[moduleIndex].distanceMeters,
+            modulePositions[moduleIndex].angle);
         lastModulePositions[moduleIndex] = modulePositions[moduleIndex];
       }
 
@@ -177,18 +175,30 @@ public class Drive extends SubsystemBase {
 
       // Apply update
       poseEstimator.updateWithTime(sampleTimestamps[i], rawGyroRotation, modulePositions);
-      
-      field.setRobotPose(getPose());//MDH
-      SmartDashboard.putData("Field",field);//MDH
-      
-      SmartDashboard.putNumber("pose X", getPose().getX());
-      SmartDashboard.putNumber("pose Y", getPose().getY());
-      SmartDashboard.putNumber("pose Z", getPose().getRotation().getDegrees());
-      SmartDashboard.putNumber("distance from HUB", getTargetRange());
     }
+
+    // --- 4. Compute distance + rotation to target AFTER odometry is fully updated
+    // ---
+    distanceFromTarget = getTargetRange();
+    Rotation2d rotationToTarget = getRotationFromTarget();
+
+    // --- 5. Logging + dashboard updates ---
+    distanceFromTarget = getTargetRange();
+    Pose2d pose = getPose();
+    Logger.recordOutput("Swerve/RobotPose", pose);
+
+    field.setRobotPose(pose);
+    SmartDashboard.putData("Field", field);
+
+    SmartDashboard.putNumber("pose X", pose.getX());
+    SmartDashboard.putNumber("pose Y", pose.getY());
+    SmartDashboard.putNumber("pose Z", pose.getRotation().getDegrees());
+    SmartDashboard.putNumber("distance from HUB", distanceFromTarget);
+    SmartDashboard.putNumber("rotation to HUB (deg)", rotationToTarget.getDegrees());
 
     // Update gyro alert
     gyroDisconnectedAlert.set(!gyroInputs.connected && Constants.currentMode != Mode.SIM);
+
   }
 
   /**
@@ -228,8 +238,10 @@ public class Drive extends SubsystemBase {
   }
 
   /**
-   * Stops the drive and turns the modules to an X arrangement to resist movement. The modules will
-   * return to their normal orientations the next time a nonzero velocity is requested.
+   * Stops the drive and turns the modules to an X arrangement to resist movement.
+   * The modules will
+   * return to their normal orientations the next time a nonzero velocity is
+   * requested.
    */
   public void stopWithX() {
     Rotation2d[] headings = new Rotation2d[4];
@@ -252,7 +264,10 @@ public class Drive extends SubsystemBase {
     return run(() -> runCharacterization(0.0)).withTimeout(1.0).andThen(sysId.dynamic(direction));
   }
 
-  /** Returns the module states (turn angles and drive velocities) for all of the modules. */
+  /**
+   * Returns the module states (turn angles and drive velocities) for all of the
+   * modules.
+   */
   @AutoLogOutput(key = "SwerveStates/Measured")
   private SwerveModuleState[] getModuleStates() {
     SwerveModuleState[] states = new SwerveModuleState[4];
@@ -262,7 +277,10 @@ public class Drive extends SubsystemBase {
     return states;
   }
 
-  /** Returns the module positions (turn angles and drive positions) for all of the modules. */
+  /**
+   * Returns the module positions (turn angles and drive positions) for all of the
+   * modules.
+   */
   private SwerveModulePosition[] getModulePositions() {
     SwerveModulePosition[] states = new SwerveModulePosition[4];
     for (int i = 0; i < 4; i++) {
@@ -330,21 +348,62 @@ public class Drive extends SubsystemBase {
     return maxSpeedMetersPerSec / driveBaseRadius;
   }
 
+  /** description */
+  public void setTarget(int lcr) {
+    
+  }
+
   /** Returns the Hub distance in Meters from the robot. */
   public double getTargetRange() {
-    return (Math.sqrt(
-      Math.pow(
-        (MiscMapping.BOTH_Y_HUB_TARGET - getPose().getY()), 2) + 
-      Math.pow(
-        (MiscMapping.RED_X_HUB_TARGET - getPose().getX()), 2)));
+    Alliance alliance = DriverStation.getAlliance().orElse(Alliance.Blue);
+
+    double targetRange;
+    double targetX;
+    double targetY = MiscMapping.BOTH_Y_HUB_TARGET;
+
+    if (alliance == Alliance.Red) {
+      targetX = MiscMapping.RED_X_HUB_TARGET;
+    } else {
+      targetX = MiscMapping.BLUE_X_HUB_TARGET;
+    }
+
+    targetRange = Math.sqrt(
+        Math.pow(targetY - getPose().getY(), 2) +
+            Math.pow(targetX - getPose().getX(), 2));
+
+    return targetRange;
   }
 
   /** Returns the Rotation2d of the Target from the robot. */
   public Rotation2d getRotationFromTarget() {
-    final Rotation2d rotation = 
-    Rotation2d.fromRadians(Math.atan2((MiscMapping.BOTH_Y_HUB_TARGET - getPose().getY()), (MiscMapping.RED_X_HUB_TARGET - getPose().getX())));
-    return rotation;
+    Alliance alliance = DriverStation.getAlliance().orElse(Alliance.Blue);
+
+    double targetX;
+    double targetY = MiscMapping.BOTH_Y_HUB_TARGET;
+
+    if (alliance == Alliance.Red) {
+      targetX = MiscMapping.RED_X_HUB_TARGET;
+    } else {
+      targetX = MiscMapping.BLUE_X_HUB_TARGET;
+    }
+
+    return Rotation2d.fromRadians(Math.atan2((targetY - getPose().getY()), (targetX - getPose().getX())));
   }
 
+  public double getVelocityForTarget() {
+    // Ensure we are always using the primitive double
+    double d = distanceFromTarget;
 
+    // Polynomial shooter model:
+    // v(d) = 5100 - 1600d + 400d²
+    double velocity = 2700
+                    + (-700 * d)
+                    + (200 * d * d);
+
+    // Dashboard logging
+    SmartDashboard.putNumber("distanceFromTarget", d);
+    SmartDashboard.putNumber("setVelocity", velocity);
+
+    return velocity;
+}
 }

@@ -5,6 +5,7 @@
 package frc.robot.subsystems.accessories;
 
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Sensors extends SubsystemBase {
@@ -12,11 +13,13 @@ public class Sensors extends SubsystemBase {
   private boolean intakePosition;
   private static Sensors instance;
   public Rotation2d targetRotation;
+  public Double targetDistance;
 
   /** Creates a new Sensors. */
   public Sensors() {
     // true is out, false is in TODO: match end of auton
     intakePosition = true;
+    targetDistance = 0.0;
   }
 
   @Override
@@ -38,12 +41,12 @@ public class Sensors extends SubsystemBase {
     return intakePosition;
   }
 
-  public void setTargetRotation() {
-    // if (alliance == blue) {
-    //   blueXTargetMeters - photonxdistance, yMeters
-    // }
+  // Get and set distance from target
+  public void setTargetDistance (Double targetDistance) {
+    this.targetDistance = targetDistance;
   }
-  public Rotation2d getTargetRotation() {
-    return targetRotation;
+
+  public Double getTargetDistance () {
+    return targetDistance;
   }
 }

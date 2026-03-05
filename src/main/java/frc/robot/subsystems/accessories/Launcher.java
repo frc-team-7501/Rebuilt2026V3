@@ -36,9 +36,9 @@ public class Launcher extends SubsystemBase {
 
     // PID values
     launcherMotorLConfig.closedLoop
-        .p(0.001)
+        .p(0.0005)
         .i(0.0)
-        .d(0.0005)
+        .d(0.008)
         .outputRange(-1, 1)
         .feedForward.kV(0.0001754);
 

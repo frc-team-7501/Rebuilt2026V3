@@ -77,15 +77,18 @@ public final class Constants {
   public static final class ButtonBoardMapping {
     // Button board is labeled -1 from these values, 0=1, 1=2, etc.
     public static final int PLACEHOLDERWPI0 = 0;
-    public static final int INTAKESTOP = 1;
-    public static final int INTAKERUN = 2;
-    public static final int SPINDEXERSTOP = 3;
+    public static final int LAUNCHERRUN = 1;
+    public static final int LAUNCHERSTOP = 2;
+    public static final int LAUNCHERREVERSE = 3;
     public static final int SPINDEXERRUN = 4;  
-    public static final int HANDOFFSTOP = 5;
-    public static final int HANDOFFRUN = 6;
-    public static final int LAUNCHERSTOP = 9;
-    public static final int LAUNCHERRUN = 10;
-    
+    public static final int SPINDEXERSTOP = 5;
+    public static final int SPINDEXERREVERSE = 6;
+    public static final int INTAKERUN = 7;
+    public static final int INTAKESTOP = 8;
+    public static final int INTAKEREVERSE = 9;
+    public static final int LEFTTARGET = 10;
+    public static final int HUBTARGET = 11;
+    public static final int RIGHTTARGET = 12;
   }
 
   public static enum Mode {

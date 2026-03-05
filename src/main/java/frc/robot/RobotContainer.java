@@ -18,7 +18,9 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.ButtonBoardMapping;
@@ -60,209 +62,227 @@ import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-    // Subsystems
-    private final Drive drive;
-    private Vision vision;
-    private Sensors sensors = Sensors.getInstance();
-    private final Intake intake = Intake.getInstance();
-    private final IntakeDeploy intakeDeploy = IntakeDeploy.getInstance();
-    private final Spindexer spindexer = Spindexer.getInstance();
-    private final Handoff handoff = Handoff.getInstance();
-    private final Launcher launcher = Launcher.getInstance();
+	// Subsystems
+	private final Drive drive;
+	private Vision vision;
+	private Sensors sensors = Sensors.getInstance();
+	private final Intake intake = Intake.getInstance();
+	private final IntakeDeploy intakeDeploy = IntakeDeploy.getInstance();
+	private final Spindexer spindexer = Spindexer.getInstance();
+	private final Handoff handoff = Handoff.getInstance();
+	private final Launcher launcher = Launcher.getInstance();
 
-    // Controller
-    private final CommandXboxController xBox = new CommandXboxController(ControllerMapping.XBOX);
-    private final GenericHID bboard = new GenericHID(ControllerMapping.BBOARD);
+	// Controller
+	private final CommandXboxController xBox = new CommandXboxController(ControllerMapping.XBOX);
+	private final GenericHID bboard = new GenericHID(ControllerMapping.BBOARD);
 
+	// Dashboard inputs
+	private final LoggedDashboardChooser<Command> autoChooser;
 
-    // Dashboard inputs
-    private final LoggedDashboardChooser<Command> autoChooser;
+	/**
+	 * The container for the robot. Contains subsystems, OI devices, and commands.
+	 */
+	public RobotContainer() {
 
-    /**
-     * The container for the robot. Contains subsystems, OI devices, and commands.
-     */
-    public RobotContainer() {
+		switch (Constants.currentMode) {
+			case REAL:
+				// Real robot, instantiate hardware IO implementations
+				drive = new Drive(
+						new GyroIONavX(),
+						new ModuleIOSpark(0),
+						new ModuleIOSpark(1),
+						new ModuleIOSpark(2),
+						new ModuleIOSpark(3));
+				vision = new Vision(drive::addVisionMeasurement,
+						new VisionIOPhotonVision(kCameraName, VisionConstants.robotToCamera0));
+				break;
 
-        switch (Constants.currentMode) {
-            case REAL:
-                // Real robot, instantiate hardware IO implementations
-                drive = new Drive(
-                        new GyroIONavX(),
-                        new ModuleIOSpark(0),
-                        new ModuleIOSpark(1),
-                        new ModuleIOSpark(2),
-                        new ModuleIOSpark(3));
-                vision = new Vision(drive::addVisionMeasurement, new VisionIOPhotonVision(kCameraName, VisionConstants.robotToCamera0));
-                break;
+			case SIM:
+				// Sim robot, instantiate physics sim IO implementations
+				drive = new Drive(
+						new GyroIO() {
+						},
+						new ModuleIOSim(),
+						new ModuleIOSim(),
+						new ModuleIOSim(),
+						new ModuleIOSim());
+				break;
 
-            case SIM:
-                // Sim robot, instantiate physics sim IO implementations
-                drive = new Drive(
-                        new GyroIO() {
-                        },
-                        new ModuleIOSim(),
-                        new ModuleIOSim(),
-                        new ModuleIOSim(),
-                        new ModuleIOSim());
-                break;
+			default:
+				// Replayed robot, disable IO implementations
+				drive = new Drive(
+						new GyroIO() {
+						},
+						new ModuleIO() {
+						},
+						new ModuleIO() {
+						},
+						new ModuleIO() {
+						},
+						new ModuleIO() {
+						});
+				break;
+		}
 
-            default:
-                // Replayed robot, disable IO implementations
-                drive = new Drive(
-                        new GyroIO() {
-                        },
-                        new ModuleIO() {
-                        },
-                        new ModuleIO() {
-                        },
-                        new ModuleIO() {
-                        },
-                        new ModuleIO() {
-                        });
-                break;
-        }
+		// Named Commands
+		// Run auxiliary commands
+		NamedCommands.registerCommand("IntakeRunCommand", new IntakeControlCommand(intake, -1.0, sensors));
+		NamedCommands.registerCommand("HandoffRunCommand", new HandoffControlCommand(handoff, -1.0));
+		NamedCommands.registerCommand("LauncherRunCommand", new LauncherPIDControlCommand(launcher, drive::getVelocityForTarget));
+		NamedCommands.registerCommand("SpindexerRunCommand", new SpindexerControlCommand(spindexer, -0.25));
+		// Stop auxiliary commands
+		NamedCommands.registerCommand("IntakeStopCommand", new IntakeControlCommand(intake, 0.0, sensors));
+		NamedCommands.registerCommand("HandoffStopCommand", new HandoffControlCommand(handoff, 0.0));
+		NamedCommands.registerCommand("LauncherStopCommand", new LauncherPIDControlCommand(launcher, () -> 0));
+		NamedCommands.registerCommand("SpindexerStopCommand", new SpindexerControlCommand(spindexer, 0.0));
 
-        // Named Commands
-        // Run auxiliary commands
-        NamedCommands.registerCommand("IntakeRunCommand", new IntakeControlCommand(intake, -1.0, sensors));
-        NamedCommands.registerCommand("HandoffRunCommand", new HandoffControlCommand(handoff, -1.0));
-        NamedCommands.registerCommand("LauncherRunCommand", new LauncherPIDControlCommand(launcher, 0.5));
-        NamedCommands.registerCommand("SpindexerRunCommand", new SpindexerControlCommand(spindexer, -0.25));
-        // Stop auxiliary commands
-        NamedCommands.registerCommand("IntakeStopCommand", new IntakeControlCommand(intake, 0.0, sensors));
-        NamedCommands.registerCommand("HandoffStopCommand", new HandoffControlCommand(handoff, 0.0));
-        NamedCommands.registerCommand("LauncherStopCommand", new LauncherPIDControlCommand(launcher, 0));
-        NamedCommands.registerCommand("SpindexerStopCommand", new SpindexerControlCommand(spindexer, 0.0));
-        
+		// Set up auto routines
+		autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
 
-        // Set up auto routines
-        autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
+        autoChooser.addOption("Launch", 
+			new SequentialCommandGroup(
+				new ParallelRaceGroup(
+					new WaitCommand(2),
+					new LauncherPIDControlCommand(launcher, drive::getVelocityForTarget)),
+				new ParallelRaceGroup(
+					new WaitCommand(15),
+					new LauncherPIDControlCommand(launcher, drive::getVelocityForTarget),
+					new HandoffControlCommand(handoff, MiscMapping.HANDOFFSPEED),
+					new SpindexerControlCommand(spindexer, MiscMapping.SPINDEXERSPEED))
+		));
 
-        // Set up SysId routines
-        autoChooser.addOption(
-        "Drive Wheel Radius Characterization",
-        DriveCommands.wheelRadiusCharacterization(drive));
+		// Set up SysId routines
+		// autoChooser.addOption(
+		// 		"Drive Wheel Radius Characterization",
+		// 		DriveCommands.wheelRadiusCharacterization(drive));
 
-        autoChooser.addOption(
-        "Drive Simple FF Characterization",
-        DriveCommands.feedforwardCharacterization(drive));
+		// autoChooser.addOption(
+		// 		"Drive Simple FF Characterization",
+		// 		DriveCommands.feedforwardCharacterization(drive));
 
-        autoChooser.addOption(
-        "Drive SysId (Quasistatic Forward)",
-        drive.sysIdQuasistatic(SysIdRoutine.Direction.kForward));
+		// autoChooser.addOption(
+		// 		"Drive SysId (Quasistatic Forward)",
+		// 		drive.sysIdQuasistatic(SysIdRoutine.Direction.kForward));
 
-        autoChooser.addOption(
-        "Drive SysId (Quasistatic Reverse)",
-        drive.sysIdQuasistatic(SysIdRoutine.Direction.kReverse));
+		// autoChooser.addOption(
+		// 		"Drive SysId (Quasistatic Reverse)",
+		// 		drive.sysIdQuasistatic(SysIdRoutine.Direction.kReverse));
 
-        autoChooser.addOption(
-        "Drive SysId (Dynamic Forward)",
-        drive.sysIdDynamic(SysIdRoutine.Direction.kForward));
+		// autoChooser.addOption(
+		// 		"Drive SysId (Dynamic Forward)",
+		// 		drive.sysIdDynamic(SysIdRoutine.Direction.kForward));
 
-        autoChooser.addOption(
-        "Drive SysId (Dynamic Reverse)",
-        drive.sysIdDynamic(SysIdRoutine.Direction.kReverse));
+		// autoChooser.addOption(
+		// 		"Drive SysId (Dynamic Reverse)",
+		// 		drive.sysIdDynamic(SysIdRoutine.Direction.kReverse));
 
-        // Configure the button bindings
-        configureButtonBindings();
-        
-    }
+		// Configure the button bindings
+		configureButtonBindings();
 
-    /**
-     * Use this method to define your button->command mappings. Buttons can be
-     * created by
-     * instantiating a {@link GenericHID} or one of its subclasses ({@link
-     * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing
-     * it to a {@link
-     * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
-     */
-    private void configureButtonBindings() {
-        // Default command, normal field-relative drive
-        drive.setDefaultCommand(
-                DriveCommands.joystickDrive(
-                        drive,
-                        () -> xBox.getLeftY(),
-                        () -> xBox.getLeftX(),
-                        () -> -xBox.getRightX()));
+	}
 
-        // Lock to 0° when A button is held
-        xBox
-                .leftBumper()
-                .whileTrue(
-                        DriveCommands.joystickDriveAtAngle(
-                                drive,
-                                () -> xBox.getLeftY(),
-                                () -> xBox.getLeftX(),
-                                () -> drive.getRotationFromTarget()));
+	/**
+	 * Use this method to define your button->command mappings. Buttons can be
+	 * created by
+	 * instantiating a {@link GenericHID} or one of its subclasses ({@link
+	 * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing
+	 * it to a {@link
+	 * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
+	 */
+	private void configureButtonBindings() {
+		// Default command, normal field-relative drive
+		drive.setDefaultCommand(
+				DriveCommands.joystickDrive(
+						drive,
+						() -> -xBox.getLeftY(),
+						() -> -xBox.getLeftX(),
+						() -> -xBox.getRightX()));
 
-        // Switch to X pattern when X button is pressed
-        xBox.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
+		// Lock to target when  left trigger is held
+		xBox.leftBumper()
+				.whileTrue(new ParallelCommandGroup(
+						DriveCommands.joystickDriveAtAngle(
+								drive,
+								() -> -xBox.getLeftY(),
+								() -> -xBox.getLeftX(),
+								() -> drive.getRotationFromTarget()),
 
-        // Reset gyro to 0° when B button is pressed
-        xBox
-                .b()
-                .onTrue(
-                        Commands.runOnce(
-                                () -> drive.setPose(
-                                        new Pose2d(drive.getPose()
-                                                .getTranslation(),
-                                                Rotation2d.kZero)),
-                                drive)
-                                .ignoringDisable(true));
+						new LauncherPIDControlCommand(launcher, drive::getVelocityForTarget)));
 
-        // Intake control
-        new JoystickButton(bboard, 7)
-                .onTrue(new ParallelCommandGroup(
-                        new IntakeControlCommand(intake, 0.0, sensors),
-                        new IntakeDeployCommand(intakeDeploy, MiscMapping.INTAKE_IN, sensors)));
+		// Switch to X pattern when X button is pressed
+		xBox.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
 
-        new JoystickButton(bboard, 6)
-                .onTrue(new ParallelCommandGroup(
-                        new IntakeControlCommand(intake, MiscMapping.INTAKESPEED, sensors),
-                        new IntakeDeployCommand(intakeDeploy, MiscMapping.INTAKE_OUT, sensors)));
+		// Reset gyro to 0° when B button is pressed
+		xBox.b()
+				.onTrue(
+						Commands.runOnce(
+								() -> drive.setPose(
+										new Pose2d(drive.getPose()
+												.getTranslation(),
+												Rotation2d.kZero)),
+								drive)
+								.ignoringDisable(true));
 
-        new JoystickButton(bboard, 8)
-                .onTrue(new IntakeControlCommand(intake, MiscMapping.INTAKESPEED, sensors));
+		// Intake control
+		new JoystickButton(bboard, ButtonBoardMapping.INTAKESTOP)
+				.onTrue(new ParallelCommandGroup(
+						new IntakeControlCommand(intake, 0.0, sensors),
+						new IntakeDeployCommand(intakeDeploy, MiscMapping.INTAKE_IN, sensors)));
 
-        // Spindexer control
-        // Un Jam
-        new JoystickButton(bboard, 3)
-                .onTrue(new SpindexerControlCommand(spindexer, MiscMapping.SPINDEXERREVERSE));
-        new JoystickButton(bboard, 3)
-                .onFalse(new ParallelCommandGroup(
-                        new HandoffControlCommand(handoff, MiscMapping.HANDOFFSPEED),
-                        new SpindexerControlCommand(spindexer, MiscMapping.SPINDEXERIDLE)));
+		new JoystickButton(bboard, ButtonBoardMapping.INTAKERUN)
+				.onTrue(new ParallelCommandGroup(
+						new IntakeControlCommand(intake, MiscMapping.INTAKESPEED, sensors),
+						new IntakeDeployCommand(intakeDeploy, MiscMapping.INTAKE_OUT, sensors)));
 
-        // Spindexer Normal
-        new JoystickButton(bboard, 4)
-                .onTrue(new ParallelCommandGroup(
-                        new HandoffControlCommand(handoff, MiscMapping.HANDOFFIDLE),
-                        new SpindexerControlCommand(spindexer, MiscMapping.SPINDEXERIDLE)));
+		new JoystickButton(bboard, ButtonBoardMapping.INTAKEREVERSE)
+				.onTrue(new IntakeControlCommand(intake, -MiscMapping.INTAKESPEED, sensors));
 
-        // Launcher Spin
-        new JoystickButton(bboard, 1)
-                .onTrue(new LauncherPIDControlCommand(launcher, 4800));
+		// Spindexer control
+		// Un Jam
+		new JoystickButton(bboard, ButtonBoardMapping.SPINDEXERREVERSE)
+				.onTrue(new SpindexerControlCommand(spindexer, MiscMapping.SPINDEXERREVERSE));
+		new JoystickButton(bboard, ButtonBoardMapping.SPINDEXERREVERSE)
+				.onFalse(new SpindexerControlCommand(spindexer, MiscMapping.SPINDEXERIDLE));
 
-        // All Spin
-        new JoystickButton(bboard, 2)
-                .onTrue(new ParallelCommandGroup(
-                        new HandoffControlCommand(handoff, MiscMapping.HANDOFFSPEED),
-                        new SpindexerControlCommand(spindexer, MiscMapping.SPINDEXERSPEED)));
+		// Spindexer Normal
+		new JoystickButton(bboard, ButtonBoardMapping.SPINDEXERRUN)
+				.onTrue(new SpindexerControlCommand(spindexer, MiscMapping.SPINDEXERSPEED));
 
-        // Stop All
-        new JoystickButton(bboard, 5)
-                .onTrue(new ParallelCommandGroup(
-                        new LauncherPIDControlCommand(launcher, 0),
-                        new HandoffControlCommand(handoff, MiscMapping.HANDOFFIDLE),
-                        new SpindexerControlCommand(spindexer, MiscMapping.SPINDEXERIDLE)));
-    }
+		// Launcher Spin
+		new JoystickButton(bboard, ButtonBoardMapping.LAUNCHERRUN)
+				.onTrue(new LauncherPIDControlCommand(launcher, drive::getVelocityForTarget));
+		// Launcher Stop
+		new JoystickButton(bboard, ButtonBoardMapping.LAUNCHERSTOP)
+				.onTrue(new LauncherPIDControlCommand(launcher, () -> 0.0));
 
-    /**
-     * Use this to pass the autonomous command to the main {@link Robot} class.
-     *
-     * @return the command to run in autonomous
-     */
-    public Command getAutonomousCommand() {
-        return autoChooser.get();
-    }
+		// All Spin
+		xBox.rightBumper()
+				.onTrue(new SequentialCommandGroup(
+						new ParallelRaceGroup(
+								new WaitCommand(0.25),
+								new LauncherPIDControlCommand(launcher, drive::getVelocityForTarget),
+								new SpindexerControlCommand(spindexer,MiscMapping.SPINDEXERREVERSE)),
+						new ParallelCommandGroup(
+								new LauncherPIDControlCommand(launcher, drive::getVelocityForTarget),
+								new HandoffControlCommand(handoff,MiscMapping.HANDOFFSPEED),
+								new SpindexerControlCommand(spindexer,MiscMapping.SPINDEXERSPEED))))
+		// Stop All
+				.onFalse(new ParallelCommandGroup(
+						new LauncherPIDControlCommand(launcher, () -> 0),
+						new HandoffControlCommand(handoff, MiscMapping.HANDOFFIDLE),
+						new SpindexerControlCommand(spindexer, MiscMapping.SPINDEXERIDLE)));
+
+		// Set Target
+		// new JoystickButton(bboard, ButtonBoardMapping.HUBTARGET)
+		// ()
+	}
+
+	/**
+	 * Use this to pass the autonomous command to the main {@link Robot} class.
+	 *
+	 * @return the command to run in autonomous
+	 */
+	public Command getAutonomousCommand() {
+		return autoChooser.get();
+	}
 }

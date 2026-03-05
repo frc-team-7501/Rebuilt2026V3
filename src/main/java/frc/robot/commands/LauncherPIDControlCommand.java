@@ -4,6 +4,9 @@
 
 package frc.robot.commands;
 
+import java.util.function.DoubleSupplier;
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.accessories.Launcher;
 
@@ -11,9 +14,9 @@ import frc.robot.subsystems.accessories.Launcher;
 public class LauncherPIDControlCommand extends Command {
   /** Creates a new LauncherPIDControlCommand. */
   private final Launcher launcher;
-  private double velocity;
+  private DoubleSupplier velocity;
   
-  public LauncherPIDControlCommand(Launcher launcher, double velocity) {
+  public LauncherPIDControlCommand(Launcher launcher, DoubleSupplier velocity) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.launcher = launcher;
     this.velocity = velocity;
@@ -27,8 +30,9 @@ public class LauncherPIDControlCommand extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (velocity != 0) {
-      launcher.pidSetVelocity(velocity);
+      double velocityLocal = velocity.getAsDouble();
+    if (velocityLocal != 0) {
+      launcher.pidSetVelocity(velocityLocal);
     } else {
       launcher.stop();
     }

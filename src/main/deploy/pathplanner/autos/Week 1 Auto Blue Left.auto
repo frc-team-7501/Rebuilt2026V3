@@ -5,41 +5,9 @@
     "data": {
       "commands": [
         {
-          "type": "race",
+          "type": "path",
           "data": {
-            "commands": [
-              {
-                "type": "wait",
-                "data": {
-                  "waitTime": 0.5
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "LauncherRunCommand"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "race",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "New Path"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "LauncherRunCommand"
-                }
-              }
-            ]
+            "pathName": "Blue Left Start"
           }
         },
         {
@@ -57,6 +25,19 @@
                 "data": {
                   "name": "LauncherRunCommand"
                 }
+              }
+            ]
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "SpindexerRunCommand"
+                }
               },
               {
                 "type": "named",
@@ -67,26 +48,13 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "SpindexerRunCommand"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "race",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Test Path"
+                  "name": "LauncherRunCommand"
                 }
               },
               {
-                "type": "named",
+                "type": "wait",
                 "data": {
-                  "name": "LauncherRunCommand"
+                  "waitTime": 5.0
                 }
               }
             ]
