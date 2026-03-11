@@ -42,10 +42,11 @@ public class Launcher extends SubsystemBase {
         .outputRange(-1, 1)
         .feedForward.kV(0.0001754);
 
-    launcherMotorLConfig.smartCurrentLimit(80);
+    launcherMotorLConfig.smartCurrentLimit(50);
     launcherMotorL.configure(launcherMotorLConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     
     // Top motor follows the bottom motor.
+    launcherMotorRConfig.smartCurrentLimit(50);
     launcherMotorRConfig.follow(launcherMotorL.getDeviceId(), true);
     launcherMotorR.configure(launcherMotorRConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
   }

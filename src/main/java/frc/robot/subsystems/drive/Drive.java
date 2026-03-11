@@ -396,9 +396,13 @@ public class Drive extends SubsystemBase {
 
     // Polynomial shooter model:
     // v(d) = 5100 - 1600d + 400d²
-    double velocity = 2700
-                    + (-700 * d)
-                    + (200 * d * d);
+//      double velocity = 2700
+  //                    + (-700 * d)
+    //                  + (200 * d * d);
+     double velocity = 2400
+                     + (-433 * d)
+                     + (133 * d * d);
+
 
     // Dashboard logging
     SmartDashboard.putNumber("distanceFromTarget", d);

@@ -33,11 +33,11 @@ public class GyroIONavX implements GyroIO {
   @Override
   public void updateInputs(GyroIOInputs inputs) {
     inputs.connected = true;
-    inputs.yawPosition = Rotation2d.fromDegrees(-navX.getYaw().in(Degrees));
+    inputs.yawPosition = Rotation2d.fromDegrees(navX.getYaw().in(Degrees));
     Velocity = navX.getAngularVel();
-    inputs.yawVelocityRadPerSec = -Velocity[2].in(DegreesPerSecond);
+    inputs.yawVelocityRadPerSec = Velocity[2].in(DegreesPerSecond);
 
-    SmartDashboard.putNumber("GyroAngle", -navX.getYaw().in(Degrees));
+    SmartDashboard.putNumber("GyroAngle", navX.getYaw().in(Degrees));
     SmartDashboard.putNumber("GyroZ", inputs.yawVelocityRadPerSec);
 
     inputs.odometryYawTimestamps =
