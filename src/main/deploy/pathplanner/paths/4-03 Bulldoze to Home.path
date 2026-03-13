@@ -3,47 +3,35 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.072320512820513,
-        "y": 4.5582692307692305
+        "x": 7.700217948717951,
+        "y": 0.6279358974358968
       },
       "prevControl": null,
       "nextControl": {
-        "x": 8.060692307692308,
-        "y": 6.849025641025639
+        "x": 6.806556454928511,
+        "y": 0.6194078826276341
       },
       "isLocked": false,
-      "linkedName": "1-Pickup1 End"
+      "linkedName": "4-Buldoze1 End"
     },
     {
       "anchor": {
-        "x": 4.072217948726671,
-        "y": 7.418807692315743
+        "x": 1.8628589743589758,
+        "y": 0.6279358974358968
       },
       "prevControl": {
-        "x": 4.967589743592409,
-        "y": 7.697884615390297
+        "x": 2.75199933930264,
+        "y": 0.6457507447945564
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "4-Home End"
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 0.7043606799704409,
-      "rotationDegrees": 85.54894680250426
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
-  "eventMarkers": [
-    {
-      "name": "",
-      "waypointRelativePos": 0,
-      "endWaypointRelativePos": null,
-      "command": null
-    }
-  ],
+  "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 5.0,
     "maxAcceleration": 10.0,
@@ -54,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 97.69605172201653
+    "rotation": 90.0
   },
   "reversed": false,
-  "folder": "1 One Swipe Left",
+  "folder": "4 Bulldoze Left",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -74.624
+    "rotation": 90.0
   },
   "useDefaultConstraints": true
 }

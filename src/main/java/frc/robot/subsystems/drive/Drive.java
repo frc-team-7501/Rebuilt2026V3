@@ -97,7 +97,7 @@ public class Drive extends SubsystemBase {
         new PPHolonomicDriveController(
             new PIDConstants(2.0, 0.0, 0.0), new PIDConstants(5.0, 0.0, 0.0)),
         ppConfig,
-        () -> DriverStation.getAlliance().orElse(Alliance.Red) == Alliance.Blue,
+        () -> DriverStation.getAlliance().orElse(Alliance.Blue) == Alliance.Red,
         this);
     Pathfinding.setPathfinder(new LocalADStarAK());
     PathPlannerLogging.setLogActivePathCallback(
@@ -387,7 +387,7 @@ public class Drive extends SubsystemBase {
       targetX = MiscMapping.BLUE_X_HUB_TARGET;
     }
 
-    return Rotation2d.fromRadians(Math.atan2((targetY - getPose().getY()), (targetX - getPose().getX())));
+    return Rotation2d.fromRadians(Math.atan2((targetY - getPose().getY()), (targetX - getPose().getX())) + Math.PI);
   }
 
   public double getVelocityForTarget() {

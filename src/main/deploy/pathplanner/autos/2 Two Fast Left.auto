@@ -15,7 +15,13 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "1-01 Start to Launch"
+                        "pathName": "2-01 Start through Pickup"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "2-02 Pickup to Launch"
                       }
                     },
                     {
@@ -25,7 +31,7 @@
                           {
                             "type": "wait",
                             "data": {
-                              "waitTime": 3.0
+                              "waitTime": 5.0
                             }
                           },
                           {
@@ -46,17 +52,17 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "1-02 Launch to Center"
+                        "pathName": "2-03 Launch to Center"
                       }
                     },
                     {
-                      "type": "race",
+                      "type": "deadline",
                       "data": {
                         "commands": [
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "1-03 Center to Pickup"
+                              "pathName": "2-04 Center2 to Loop"
                             }
                           },
                           {
@@ -75,13 +81,13 @@
                       }
                     },
                     {
-                      "type": "race",
+                      "type": "deadline",
                       "data": {
                         "commands": [
                           {
-                            "type": "wait",
+                            "type": "path",
                             "data": {
-                              "waitTime": 0.05
+                              "pathName": "2-05 Loop to Launch2"
                             }
                           },
                           {
@@ -100,31 +106,19 @@
                       }
                     },
                     {
-                      "type": "path",
-                      "data": {
-                        "pathName": "1-04 Intake to Launch"
-                      }
-                    },
-                    {
-                      "type": "race",
+                      "type": "parallel",
                       "data": {
                         "commands": [
                           {
-                            "type": "wait",
+                            "type": "named",
                             "data": {
-                              "waitTime": 3.0
+                              "name": "SpindexerRunCommand"
                             }
                           },
                           {
                             "type": "named",
                             "data": {
                               "name": "HandoffRunCommand"
-                            }
-                          },
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "SpindexerRunCommand"
                             }
                           }
                         ]

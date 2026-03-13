@@ -25,7 +25,7 @@
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "1 - Start to Launch End"
+      "linkedName": "1-Launch1 End"
     }
   ],
   "rotationTargets": [],
@@ -53,13 +53,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -48.72060073406993
+    "rotation": 131.28
   },
   "reversed": false,
   "folder": "1 One Swipe Left",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -90.0
+    "rotation": 89.75737503135895
   },
   "useDefaultConstraints": true
 }

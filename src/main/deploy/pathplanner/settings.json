@@ -3,8 +3,11 @@
   "robotLength": 0.9398,
   "holonomicMode": true,
   "pathFolders": [
+    "0 Test Paths",
     "1 One Swipe Left",
-    "2 Two Swipe Left"
+    "2 Two Fast Left",
+    "3 Two Fast Right",
+    "4 Bulldoze Left"
   ],
   "autoFolders": [],
   "defaultMaxVel": 5.0,

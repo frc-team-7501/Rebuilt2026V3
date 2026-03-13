@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 6.142038461538463,
-        "y": 7.2095
+        "x": 2.66520512820513,
+        "y": 1.523307692307693
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.153666666666667,
-        "y": 6.721115384615384
+        "x": 2.494625565615127,
+        "y": 1.340543875246976
       },
       "isLocked": false,
-      "linkedName": "2 - Center2 End"
+      "linkedName": "4-Launch1 End"
     },
     {
       "anchor": {
-        "x": 6.142038461538463,
-        "y": 3.5117307692307698
+        "x": 1.072141025641027,
+        "y": 1.2209743589743585
       },
       "prevControl": {
-        "x": 6.142038461538463,
-        "y": 4.197794871794871
+        "x": 2.0605384615384637,
+        "y": 2.3372820512820502
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "2 - Center2 to Intake2 End"
+      "linkedName": "4-Corner1 End"
     }
   ],
   "rotationTargets": [],
@@ -33,7 +33,7 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 5.0,
+    "maxVelocity": 1.5,
     "maxAcceleration": 10.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 1000.0,
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 90.0
+    "rotation": -142.35237935989244
   },
   "reversed": false,
-  "folder": "2 Two Swipe Left",
+  "folder": "4 Bulldoze Left",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 90.0
+    "rotation": -128.65980825409014
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

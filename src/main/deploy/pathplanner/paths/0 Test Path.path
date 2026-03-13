@@ -3,47 +3,35 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.072320512820513,
-        "y": 4.5582692307692305
+        "x": 2.556868327402136,
+        "y": 3.45938315539739
       },
       "prevControl": null,
       "nextControl": {
-        "x": 8.060692307692308,
-        "y": 6.849025641025639
+        "x": 2.6153276024307885,
+        "y": 3.21631420805297
       },
       "isLocked": false,
-      "linkedName": "1-Pickup1 End"
+      "linkedName": "0 - TestStart"
     },
     {
       "anchor": {
-        "x": 4.072217948726671,
-        "y": 7.418807692315743
+        "x": 2.556868327402136,
+        "y": 5.051743772241994
       },
       "prevControl": {
-        "x": 4.967589743592409,
-        "y": 7.697884615390297
+        "x": 2.508618879602521,
+        "y": 4.502203574521777
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "0-Test End"
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 0.7043606799704409,
-      "rotationDegrees": 85.54894680250426
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
-  "eventMarkers": [
-    {
-      "name": "",
-      "waypointRelativePos": 0,
-      "endWaypointRelativePos": null,
-      "command": null
-    }
-  ],
+  "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 5.0,
     "maxAcceleration": 10.0,
@@ -54,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 97.69605172201653
+    "rotation": 0.0
   },
   "reversed": false,
-  "folder": "1 One Swipe Left",
+  "folder": "0 Test Paths",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -74.624
+    "rotation": 0.0
   },
   "useDefaultConstraints": true
 }

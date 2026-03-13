@@ -3,32 +3,37 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.072320512820513,
-        "y": 7.081589743589743
+        "x": 4.025705128210641,
+        "y": 0.686
       },
       "prevControl": null,
       "nextControl": {
-        "x": 8.080928674638669,
-        "y": 6.742119774938554
+        "x": 5.688538461538462,
+        "y": 0.7790256410309784
       },
       "isLocked": false,
-      "linkedName": "1 - Launch to Center End"
+      "linkedName": "3-Launch1 End"
     },
     {
       "anchor": {
-        "x": 8.072320512820513,
-        "y": 4.953628205128206
+        "x": 6.956012820512821,
+        "y": 0.686
       },
       "prevControl": {
-        "x": 8.058481267841795,
-        "y": 5.2032448618208615
+        "x": 6.397858954451551,
+        "y": 0.7557690715043187
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "1 - Center to Pickup End"
+      "linkedName": "3-Center1 End"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.4042867701404264,
+      "rotationDegrees": -89.404
+    }
+  ],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
@@ -42,13 +47,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 105.376
+    "rotation": 104.381
   },
   "reversed": false,
-  "folder": "2 Two Swipe Left",
+  "folder": "3 Two Fast Right",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 105.376
+    "rotation": -100.532
   },
   "useDefaultConstraints": true
 }
