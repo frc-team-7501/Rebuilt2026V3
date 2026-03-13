@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.8699568845406165,
-        "y": 6.203390883335493
+        "x": 3.315538033969597,
+        "y": 6.226157064373192
       },
       "isLocked": false,
       "linkedName": null
@@ -20,12 +20,12 @@
         "y": 5.9339976275207595
       },
       "prevControl": {
-        "x": 3.0925709667484242,
-        "y": 6.2066506775595895
+        "x": 2.756363458355656,
+        "y": 6.18456897387636
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Start to Launch End"
+      "linkedName": "1 - Start to Launch End"
     }
   ],
   "rotationTargets": [],
@@ -44,19 +44,19 @@
   ],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 1.0,
-    "maxAcceleration": 1.0,
+    "maxVelocity": 5.0,
+    "maxAcceleration": 10.0,
     "maxAngularVelocity": 540.0,
-    "maxAngularAcceleration": 720.0,
+    "maxAngularAcceleration": 1000.0,
     "nominalVoltage": 12.0,
     "unlimited": false
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -46.7899106082461
+    "rotation": -48.72060073406993
   },
   "reversed": false,
-  "folder": "Learning Path",
+  "folder": "1 One Swipe Left",
   "idealStartingState": {
     "velocity": 0,
     "rotation": -90.0

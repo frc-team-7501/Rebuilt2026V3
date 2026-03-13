@@ -3,15 +3,14 @@
   "robotLength": 0.9398,
   "holonomicMode": true,
   "pathFolders": [
-    "Learning Path",
-    "New Folder",
-    "New New Folder"
+    "1 One Swipe Left",
+    "2 Two Swipe Left"
   ],
   "autoFolders": [],
-  "defaultMaxVel": 1.0,
-  "defaultMaxAccel": 1.0,
+  "defaultMaxVel": 5.0,
+  "defaultMaxAccel": 10.0,
   "defaultMaxAngVel": 540.0,
-  "defaultMaxAngAccel": 720.0,
+  "defaultMaxAngAccel": 1000.0,
   "defaultNominalVoltage": 12.0,
   "robotMass": 40.823,
   "robotMOI": 6.883,

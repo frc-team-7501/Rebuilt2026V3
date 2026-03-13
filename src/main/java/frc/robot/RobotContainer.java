@@ -127,11 +127,13 @@ public class RobotContainer {
 		// Named Commands
 		// Run auxiliary commands
 		NamedCommands.registerCommand("IntakeRunCommand", new IntakeControlCommand(intake, -1.0, sensors));
+		NamedCommands.registerCommand("IntakeDeployCommand", new IntakeDeployCommand(intakeDeploy, MiscMapping.INTAKE_OUT, sensors));
 		NamedCommands.registerCommand("HandoffRunCommand", new HandoffControlCommand(handoff, -1.0));
 		NamedCommands.registerCommand("LauncherRunCommand", new LauncherPIDControlCommand(launcher, drive::getVelocityForTarget));
 		NamedCommands.registerCommand("SpindexerRunCommand", new SpindexerControlCommand(spindexer, -0.25));
 		// Stop auxiliary commands
 		NamedCommands.registerCommand("IntakeStopCommand", new IntakeControlCommand(intake, 0.0, sensors));
+		NamedCommands.registerCommand("IntakeRetractCommand", new IntakeDeployCommand(intakeDeploy, MiscMapping.INTAKE_IN, sensors));
 		NamedCommands.registerCommand("HandoffStopCommand", new HandoffControlCommand(handoff, 0.0));
 		NamedCommands.registerCommand("LauncherStopCommand", new LauncherPIDControlCommand(launcher, () -> 0));
 		NamedCommands.registerCommand("SpindexerStopCommand", new SpindexerControlCommand(spindexer, 0.0));

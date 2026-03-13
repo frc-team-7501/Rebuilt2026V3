@@ -1,0 +1,86 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 8.072320512820513,
+        "y": 4.953628205128206
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 8.060692307692308,
+        "y": 7.2443846153846145
+      },
+      "isLocked": false,
+      "linkedName": "1 - Center to Pickup End"
+    },
+    {
+      "anchor": {
+        "x": 4.642000000000001,
+        "y": 7.500205128205128
+      },
+      "prevControl": {
+        "x": 4.892643346175997,
+        "y": 7.500205128205128
+      },
+      "nextControl": {
+        "x": 4.392000000000001,
+        "y": 7.500205128205128
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 2.5461091340450777,
+        "y": 5.9339976275207595
+      },
+      "prevControl": {
+        "x": 2.66520512820513,
+        "y": 7.674628205128204
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "1 - Start to Launch End"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.6906367041198475,
+      "rotationDegrees": 179.3298804825064
+    },
+    {
+      "waypointRelativePos": 1.4187265917602963,
+      "rotationDegrees": 179.64020893842735
+    }
+  ],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [
+    {
+      "name": "",
+      "waypointRelativePos": 0,
+      "endWaypointRelativePos": null,
+      "command": null
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 5.0,
+    "maxAcceleration": 10.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 1000.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -48.72060073406993
+  },
+  "reversed": false,
+  "folder": "1 One Swipe Left",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 105.376
+  },
+  "useDefaultConstraints": true
+}
