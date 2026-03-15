@@ -14,7 +14,6 @@ import static frc.robot.subsystems.drive.DriveConstants.GyroCanId;
 import com.studica.frc.Navx;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.units.measure.AngularVelocity;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import java.util.Queue;
 
@@ -36,9 +35,6 @@ public class GyroIONavX implements GyroIO {
     inputs.yawPosition = Rotation2d.fromDegrees(navX.getYaw().in(Degrees));
     Velocity = navX.getAngularVel();
     inputs.yawVelocityRadPerSec = Velocity[2].in(DegreesPerSecond);
-
-    SmartDashboard.putNumber("GyroAngle", navX.getYaw().in(Degrees));
-    SmartDashboard.putNumber("GyroZ", inputs.yawVelocityRadPerSec);
 
     inputs.odometryYawTimestamps =
         yawTimestampQueue.stream().mapToDouble((Double value) -> value).toArray();

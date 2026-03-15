@@ -163,6 +163,11 @@ public class Drive extends SubsystemBase {
         lastModulePositions[moduleIndex] = modulePositions[moduleIndex];
       }
 
+     SmartDashboard.putNumber("Module 0", modulePositions[0].distanceMeters);
+     SmartDashboard.putNumber("Module 1", modulePositions[1].distanceMeters);
+     SmartDashboard.putNumber("Module 2", modulePositions[2].distanceMeters);
+     SmartDashboard.putNumber("Module 3", modulePositions[3].distanceMeters);
+
       // Update gyro angle
       if (gyroInputs.connected) {
         // Use the real gyro angle
@@ -400,8 +405,8 @@ public class Drive extends SubsystemBase {
   //                    + (-700 * d)
     //                  + (200 * d * d);
      double velocity = 2400
-                     + (-433 * d)
-                     + (133 * d * d);
+                     + (-167 * d)
+                     + (66.7 * d * d);
 
 
     // Dashboard logging

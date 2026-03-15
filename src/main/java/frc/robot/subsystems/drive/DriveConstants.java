@@ -22,10 +22,14 @@ public class DriveConstants {
   public static final double driveBaseRadius = Math.hypot(trackWidth / 2.0, wheelBase / 2.0);
   public static final Translation2d[] moduleTranslations =
       new Translation2d[] {
-        new Translation2d(trackWidth / 2.0, wheelBase / 2.0),
-        new Translation2d(trackWidth / 2.0, -wheelBase / 2.0),
-        new Translation2d(-trackWidth / 2.0, wheelBase / 2.0),
-        new Translation2d(-trackWidth / 2.0, -wheelBase / 2.0)
+        // new Translation2d(trackWidth / 2.0, wheelBase / 2.0),
+        // new Translation2d(trackWidth / 2.0, -wheelBase / 2.0),
+        // new Translation2d(-trackWidth / 2.0, wheelBase / 2.0),
+        // new Translation2d(-trackWidth / 2.0, -wheelBase / 2.0)
+        new Translation2d(wheelBase / 2.0, trackWidth / 2.0),
+        new Translation2d(wheelBase / 2.0, -trackWidth / 2.0),
+        new Translation2d(-wheelBase / 2.0, trackWidth / 2.0),
+        new Translation2d(-wheelBase / 2.0, -trackWidth / 2.0)
       };
 
   // Zeroed rotation values for each module, see setup instructions
@@ -35,7 +39,7 @@ public class DriveConstants {
   public static final Rotation2d backRightZeroRotation = new Rotation2d(0.0);
 
   // Device CAN IDs
-  public static final int GyroCanId = 0;
+  public static final int GyroCanId = 20;
 
   public static final int frontLeftDriveCanId = 31;
   public static final int frontRightDriveCanId = 32;
@@ -53,7 +57,7 @@ public class DriveConstants {
   public static final int backRightTurnCanId = 13;
 
   // Drive motor configuration
-  public static final int driveMotorCurrentLimit = 50;
+  public static final int driveMotorCurrentLimit = 60;
   public static final double wheelRadiusMeters = Units.inchesToMeters(2);
   public static final double driveMotorReduction = 6.12;
   public static final DCMotor driveGearbox = DCMotor.getNeoVortex(1);

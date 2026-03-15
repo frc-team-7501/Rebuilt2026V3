@@ -107,7 +107,7 @@ public class ModuleIOSpark implements ModuleIO {
     // Configure drive motor
     var driveConfig = new SparkFlexConfig();
     driveConfig
-        .idleMode(IdleMode.kBrake)
+        .idleMode(IdleMode.kCoast)
         .smartCurrentLimit(driveMotorCurrentLimit)
         .voltageCompensation(12.0);
     driveConfig
@@ -164,7 +164,7 @@ public class ModuleIOSpark implements ModuleIO {
     drivePositionQueue =
         SparkOdometryThread.getInstance().registerSignal(driveSpark, driveEncoder::getPosition);
     turnPositionQueue =
-        SparkOdometryThread.getInstance().registerSignal(turnSpark, ()-> turnEncoder.getPosition().getValueAsDouble());
+        SparkOdometryThread.getInstance().registerSignal(turnSpark, ()-> turnEncoder.getPosition().getValueAsDouble() * (2 * Math.PI));
   }
 
   @Override

@@ -44,6 +44,7 @@ import frc.robot.subsystems.accessories.VisionIOPhotonVision;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.GyroIO;
 import frc.robot.subsystems.drive.GyroIONavX;
+import frc.robot.subsystems.drive.GyroIOPigeon2;
 import frc.robot.subsystems.drive.ModuleIO;
 import frc.robot.subsystems.drive.ModuleIOSim;
 import frc.robot.subsystems.drive.ModuleIOSpark;
@@ -88,7 +89,7 @@ public class RobotContainer {
 			case REAL:
 				// Real robot, instantiate hardware IO implementations
 				drive = new Drive(
-						new GyroIONavX(),
+						new GyroIOPigeon2(),
 						new ModuleIOSpark(0),
 						new ModuleIOSpark(1),
 						new ModuleIOSpark(2),
