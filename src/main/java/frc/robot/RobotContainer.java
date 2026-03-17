@@ -155,17 +155,17 @@ public class RobotContainer {
 		));
 
 		// Set up SysId routines
-		// autoChooser.addOption(
-		// 		"Drive Wheel Radius Characterization",
-		// 		DriveCommands.wheelRadiusCharacterization(drive));
+		autoChooser.addOption(
+				"Drive Wheel Radius Characterization",
+				DriveCommands.wheelRadiusCharacterization(drive));
 
-		// autoChooser.addOption(
-		// 		"Drive Simple FF Characterization",
-		// 		DriveCommands.feedforwardCharacterization(drive));
+		autoChooser.addOption(
+				"Drive Simple FF Characterization",
+				DriveCommands.feedforwardCharacterization(drive));
 
-		// autoChooser.addOption(
-		// 		"Drive SysId (Quasistatic Forward)",
-		// 		drive.sysIdQuasistatic(SysIdRoutine.Direction.kForward));
+		autoChooser.addOption(
+				"Drive SysId (Quasistatic Forward)",
+				drive.sysIdQuasistatic(SysIdRoutine.Direction.kForward));
 
 		// autoChooser.addOption(
 		// 		"Drive SysId (Quasistatic Reverse)",
@@ -253,7 +253,7 @@ public class RobotContainer {
 
 		// Launcher Spin
 		new JoystickButton(bboard, ButtonBoardMapping.LAUNCHERRUN)
-				.onTrue(new LauncherPIDControlCommand(launcher, drive::getVelocityForTarget));
+				.onTrue(new LauncherPIDControlCommand(launcher, ()->2400));
 		xBox.a()
 				.onTrue(new LauncherPIDControlCommand(launcher, ()->2400));
 		// Launcher Stop
@@ -265,10 +265,10 @@ public class RobotContainer {
 				.onTrue(new SequentialCommandGroup(
 						new ParallelRaceGroup(
 								new WaitCommand(0.25),
-								new LauncherPIDControlCommand(launcher, drive::getVelocityForTarget),
+								// new LauncherPIDControlCommand(launcher, drive::getVelocityForTarget),
 								new SpindexerControlCommand(spindexer,MiscMapping.SPINDEXERREVERSE)),
 						new ParallelCommandGroup(
-								new LauncherPIDControlCommand(launcher, drive::getVelocityForTarget),
+								// new LauncherPIDControlCommand(launcher, drive::getVelocityForTarget),
 								new HandoffControlCommand(handoff,MiscMapping.HANDOFFSPEED),
 								new SpindexerControlCommand(spindexer,MiscMapping.SPINDEXERSPEED))))
 		// Stop All

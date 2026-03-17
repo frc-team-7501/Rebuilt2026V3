@@ -3,80 +3,71 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 4.432692307692309,
-        "y": 0.6511923076923085
+        "x": 4.421,
+        "y": 0.6
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.432692307692309,
-        "y": 0.6511923076923088
+        "x": 5.43265508523774,
+        "y": 0.7744158900840282
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 7.746730769230771,
-        "y": 1.325
+        "x": 7.967666666666666,
+        "y": 1.2
       },
       "prevControl": {
-        "x": 7.107403744443073,
-        "y": 0.31869852453744785
+        "x": 7.549052163075621,
+        "y": 0.0836919773085758
       },
       "nextControl": {
-        "x": 7.990923076923078,
-        "y": 1.7093589743589748
+        "x": 8.141754545810759,
+        "y": 1.6642354588166308
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 7.909525641025642,
-        "y": 3.174512820512821
+        "x": 7.967666666666666,
+        "y": 3.256
       },
       "prevControl": {
-        "x": 7.928606333644025,
-        "y": 2.0813806725173603
+        "x": 7.944407876228021,
+        "y": 2.1629487685934845
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "3-Intake1 End"
+      "linkedName": null
     }
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.5572801182557279,
-      "rotationDegrees": 115.55349668898887
+      "waypointRelativePos": 0.2457757296467012,
+      "rotationDegrees": -90.0
+    },
+    {
+      "waypointRelativePos": 0.5661492978566166,
+      "rotationDegrees": 102.911
     }
   ],
   "constraintZones": [],
   "pointTowardsZones": [],
-  "eventMarkers": [
-    {
-      "name": "IntakeDeployCommand",
-      "waypointRelativePos": 0.6,
-      "endWaypointRelativePos": null,
-      "command": null
-    },
-    {
-      "name": "IntakeRunCommand",
-      "waypointRelativePos": 1.0,
-      "endWaypointRelativePos": null,
-      "command": null
-    }
-  ],
+  "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 5.0,
-    "maxAcceleration": 10.0,
-    "maxAngularVelocity": 800.0,
-    "maxAngularAcceleration": 1000.0,
+    "maxVelocity": 1.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 500.0,
+    "maxAngularAcceleration": 400.0,
     "nominalVoltage": 12.0,
     "unlimited": false
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 111.20753842185653
+    "rotation": 115.94199999999998
   },
   "reversed": false,
   "folder": "3 Two Fast Right",
@@ -84,5 +75,5 @@
     "velocity": 0,
     "rotation": -90.0
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

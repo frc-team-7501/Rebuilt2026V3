@@ -9,10 +9,10 @@
       "prevControl": null,
       "nextControl": {
         "x": 7.956012820512821,
-        "y": 0.6859999999999999
+        "y": 0.686
       },
       "isLocked": false,
-      "linkedName": "3-Center1 End"
+      "linkedName": null
     },
     {
       "anchor": {
@@ -41,7 +41,7 @@
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "3-Loop End"
+      "linkedName": null
     }
   ],
   "rotationTargets": [

@@ -8,20 +8,20 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.793166666666668,
-        "y": 2.930192307692308
+        "x": 5.921104520496379,
+        "y": 1.3371282219950889
       },
       "isLocked": false,
-      "linkedName": "3-Loop End"
+      "linkedName": null
     },
     {
       "anchor": {
-        "x": 3.1768461538461548,
-        "y": 2.337
+        "x": 5.909474358974361,
+        "y": 0.895
       },
       "prevControl": {
-        "x": 3.4240800903504818,
-        "y": 2.374086124636778
+        "x": 6.130409447506758,
+        "y": 1.1275648710197514
       },
       "nextControl": null,
       "isLocked": false,
@@ -34,15 +34,15 @@
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 5.0,
-    "maxAcceleration": 10.0,
-    "maxAngularVelocity": 800.0,
-    "maxAngularAcceleration": 1000.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 500.0,
+    "maxAngularAcceleration": 400.0,
     "nominalVoltage": 12.0,
     "unlimited": false
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -130.6209225464162
+    "rotation": -90.0
   },
   "reversed": false,
   "folder": "3 Two Fast Right",

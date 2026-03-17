@@ -8,11 +8,11 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.688538461538462,
-        "y": 0.7790256410309784
+        "x": 5.688538494957828,
+        "y": 0.5929749563421138
       },
       "isLocked": false,
-      "linkedName": "3-Launch1 End"
+      "linkedName": null
     },
     {
       "anchor": {
@@ -21,16 +21,16 @@
       },
       "prevControl": {
         "x": 6.397858954451551,
-        "y": 0.7557690715043187
+        "y": 0.7557690715043188
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "3-Center1 End"
+      "linkedName": null
     }
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.4042867701404264,
+      "waypointRelativePos": 0.2002956393200302,
       "rotationDegrees": -89.404
     }
   ],
@@ -39,9 +39,9 @@
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 5.0,
-    "maxAcceleration": 10.0,
-    "maxAngularVelocity": 800.0,
-    "maxAngularAcceleration": 1000.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 500.0,
+    "maxAngularAcceleration": 400.0,
     "nominalVoltage": 12.0,
     "unlimited": false
   },
@@ -53,7 +53,7 @@
   "folder": "3 Two Fast Right",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -100.532
+    "rotation": -97.696
   },
   "useDefaultConstraints": true
 }
