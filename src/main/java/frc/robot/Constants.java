@@ -56,7 +56,7 @@ public final class Constants {
   public static final class MiscMapping {
     public static final boolean INTAKE_OUT = true;
     public static final boolean INTAKE_IN = false;
-    public static final double HANDOFFSPEED = -1.0;
+    public static final double HANDOFFSPEED = -0.75;
     public static final double HANDOFFIDLE = 0.1;
     public static final double INTAKESPEED = -1.0;
     public static final double SPINDEXERIDLE = -0.0;

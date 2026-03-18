@@ -404,7 +404,7 @@ public class Drive extends SubsystemBase {
 //      double velocity = 2700
   //                    + (-700 * d)
     //                  + (200 * d * d);
-     double velocity = 2400
+     double velocity = 2300
                      + (-167 * d)
                      + (66.7 * d * d);
 

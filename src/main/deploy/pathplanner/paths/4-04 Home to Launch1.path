@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.8628589743589758,
-        "y": 0.6279358974358968
+        "x": 1.9093717948717956,
+        "y": 0.465141025641027
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.121697077678066,
-        "y": 1.0256890703422736
+        "x": 2.1682098981908857,
+        "y": 0.8628941985474038
       },
       "isLocked": false,
       "linkedName": "4-Home End"
@@ -48,7 +48,7 @@
   "folder": "4 Bulldoze Left",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 90.0
+    "rotation": 0.0
   },
   "useDefaultConstraints": true
 }

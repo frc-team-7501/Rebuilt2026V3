@@ -7,7 +7,8 @@
     "1 One Swipe Left",
     "2 Two Fast Left",
     "3 Two Fast Right",
-    "4 Bulldoze Left"
+    "4 Bulldoze Left",
+    "5 No Rotate Left"
   ],
   "autoFolders": [],
   "defaultMaxVel": 5.0,

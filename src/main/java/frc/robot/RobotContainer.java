@@ -155,17 +155,17 @@ public class RobotContainer {
 		));
 
 		// Set up SysId routines
-		autoChooser.addOption(
-				"Drive Wheel Radius Characterization",
-				DriveCommands.wheelRadiusCharacterization(drive));
+		// autoChooser.addOption(
+		// 		"Drive Wheel Radius Characterization",
+		// 		DriveCommands.wheelRadiusCharacterization(drive));
 
-		autoChooser.addOption(
-				"Drive Simple FF Characterization",
-				DriveCommands.feedforwardCharacterization(drive));
+		// autoChooser.addOption(
+		// 		"Drive Simple FF Characterization",
+		// 		DriveCommands.feedforwardCharacterization(drive));
 
-		autoChooser.addOption(
-				"Drive SysId (Quasistatic Forward)",
-				drive.sysIdQuasistatic(SysIdRoutine.Direction.kForward));
+		// autoChooser.addOption(
+		// 		"Drive SysId (Quasistatic Forward)",
+		// 		drive.sysIdQuasistatic(SysIdRoutine.Direction.kForward));
 
 		// autoChooser.addOption(
 		// 		"Drive SysId (Quasistatic Reverse)",
@@ -211,6 +211,7 @@ public class RobotContainer {
 								() -> drive.getRotationFromTarget()),
 
 						new LauncherPIDControlCommand(launcher, drive::getVelocityForTarget)));
+		xBox.leftBumper().onFalse(new LauncherPIDControlCommand(launcher, ()-> 0.0));
 
 		// Switch to X pattern when X button is pressed
 		xBox.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
@@ -256,24 +257,23 @@ public class RobotContainer {
 				.onTrue(new LauncherPIDControlCommand(launcher, ()->2400));
 		xBox.a()
 				.onTrue(new LauncherPIDControlCommand(launcher, ()->2400));
+				
 		// Launcher Stop
 		new JoystickButton(bboard, ButtonBoardMapping.LAUNCHERSTOP)
 				.onTrue(new LauncherPIDControlCommand(launcher, () -> 0.0));
-
+		xBox.a()
+				.onFalse(new LauncherPIDControlCommand(launcher, ()-> 0.0));
 		// All Spin
 		xBox.rightBumper()
 				.onTrue(new SequentialCommandGroup(
 						new ParallelRaceGroup(
 								new WaitCommand(0.25),
-								// new LauncherPIDControlCommand(launcher, drive::getVelocityForTarget),
 								new SpindexerControlCommand(spindexer,MiscMapping.SPINDEXERREVERSE)),
 						new ParallelCommandGroup(
-								// new LauncherPIDControlCommand(launcher, drive::getVelocityForTarget),
 								new HandoffControlCommand(handoff,MiscMapping.HANDOFFSPEED),
 								new SpindexerControlCommand(spindexer,MiscMapping.SPINDEXERSPEED))))
 		// Stop All
 				.onFalse(new ParallelCommandGroup(
-						new LauncherPIDControlCommand(launcher, () -> 0),
 						new HandoffControlCommand(handoff, MiscMapping.HANDOFFIDLE),
 						new SpindexerControlCommand(spindexer, MiscMapping.SPINDEXERIDLE)));
 

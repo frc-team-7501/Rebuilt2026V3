@@ -41,7 +41,7 @@
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "2-Center1 End"
     }
   ],
   "rotationTargets": [
@@ -50,15 +50,29 @@
       "rotationDegrees": 90.0
     },
     {
-      "waypointRelativePos": 0.5661492978566166,
+      "waypointRelativePos": 0.8110599078340942,
       "rotationDegrees": -102.91061738716486
     }
   ],
-  "constraintZones": [],
+  "constraintZones": [
+    {
+      "name": "Slow to Intake",
+      "minWaypointRelativePos": 1.160563380281692,
+      "maxWaypointRelativePos": 2.0,
+      "constraints": {
+        "maxVelocity": 1.0,
+        "maxAcceleration": 3.0,
+        "maxAngularVelocity": 500.0,
+        "maxAngularAcceleration": 400.0,
+        "nominalVoltage": 12.0,
+        "unlimited": false
+      }
+    }
+  ],
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 1.0,
+    "maxVelocity": 5.0,
     "maxAcceleration": 3.0,
     "maxAngularVelocity": 500.0,
     "maxAngularAcceleration": 400.0,
@@ -73,7 +87,7 @@
   "folder": "2 Two Fast Left",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 90.0
+    "rotation": 90.92404535277262
   },
-  "useDefaultConstraints": false
+  "useDefaultConstraints": true
 }

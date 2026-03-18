@@ -45,16 +45,9 @@
                                   }
                                 },
                                 {
-                                  "type": "race",
+                                  "type": "named",
                                   "data": {
-                                    "commands": [
-                                      {
-                                        "type": "named",
-                                        "data": {
-                                          "name": "IntakeDeployCommand"
-                                        }
-                                      }
-                                    ]
+                                    "name": "IntakeDeployCommand"
                                   }
                                 }
                               ]
@@ -68,9 +61,9 @@
                       "data": {
                         "commands": [
                           {
-                            "type": "wait",
+                            "type": "path",
                             "data": {
-                              "waitTime": 1.0
+                              "pathName": "2-02 Pickup to Launch"
                             }
                           },
                           {
@@ -80,12 +73,6 @@
                             }
                           }
                         ]
-                      }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "2-02 Pickup to Launch"
                       }
                     },
                     {

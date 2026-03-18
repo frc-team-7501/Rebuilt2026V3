@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.700217948717951,
-        "y": 0.6279358974358968
+        "x": 7.444397435897437,
+        "y": 0.8605000000000007
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.806556454928511,
-        "y": 0.6194078826276341
+        "x": 6.550735942107997,
+        "y": 0.851971985191738
       },
       "isLocked": false,
       "linkedName": "4-Buldoze1 End"
     },
     {
       "anchor": {
-        "x": 1.8628589743589758,
-        "y": 0.6279358974358968
+        "x": 1.9093717948717956,
+        "y": 0.465141025641027
       },
       "prevControl": {
-        "x": 2.75199933930264,
-        "y": 0.6457507447945564
+        "x": 2.7985121598154596,
+        "y": 0.48295587299968656
       },
       "nextControl": null,
       "isLocked": false,
@@ -29,7 +29,21 @@
     }
   ],
   "rotationTargets": [],
-  "constraintZones": [],
+  "constraintZones": [
+    {
+      "name": "Constraints Zone",
+      "minWaypointRelativePos": 0.3718309859154935,
+      "maxWaypointRelativePos": 0.7342723004694827,
+      "constraints": {
+        "maxVelocity": 1.0,
+        "maxAcceleration": 3.0,
+        "maxAngularVelocity": 500.0,
+        "maxAngularAcceleration": 400.0,
+        "nominalVoltage": 12.0,
+        "unlimited": false
+      }
+    }
+  ],
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
@@ -42,13 +56,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 90.0
+    "rotation": 0.0
   },
   "reversed": false,
   "folder": "4 Bulldoze Left",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 90.0
+    "rotation": -0.8550973962668182
   },
   "useDefaultConstraints": true
 }

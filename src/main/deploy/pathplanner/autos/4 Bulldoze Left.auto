@@ -9,13 +9,63 @@
           "data": {
             "commands": [
               {
+                "type": "named",
+                "data": {
+                  "name": "LauncherRunCommand"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "IntakeRunCommand"
+                }
+              },
+              {
                 "type": "sequential",
                 "data": {
                   "commands": [
                     {
-                      "type": "path",
+                      "type": "parallel",
                       "data": {
-                        "pathName": "4-01 Start through Pickup"
+                        "commands": [
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "4-01 Start through Pickup"
+                            }
+                          },
+                          {
+                            "type": "sequential",
+                            "data": {
+                              "commands": [
+                                {
+                                  "type": "wait",
+                                  "data": {
+                                    "waitTime": 1.8
+                                  }
+                                },
+                                {
+                                  "type": "named",
+                                  "data": {
+                                    "name": "IntakeDeployCommand"
+                                  }
+                                },
+                                {
+                                  "type": "wait",
+                                  "data": {
+                                    "waitTime": 2.6
+                                  }
+                                },
+                                {
+                                  "type": "named",
+                                  "data": {
+                                    "name": "IntakeRetractCommand"
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        ]
                       }
                     },
                     {
@@ -68,12 +118,6 @@
                           {
                             "type": "named",
                             "data": {
-                              "name": "IntakeRunCommand"
-                            }
-                          },
-                          {
-                            "type": "named",
-                            "data": {
                               "name": "IntakeDeployCommand"
                             }
                           }
@@ -106,12 +150,6 @@
                       }
                     }
                   ]
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "LauncherRunCommand"
                 }
               }
             ]
