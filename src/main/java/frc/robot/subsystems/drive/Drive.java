@@ -183,7 +183,6 @@ public class Drive extends SubsystemBase {
     }
 
     // --- 4. Compute distance + rotation to target AFTER odometry is fully updated
-    // ---
     distanceFromTarget = getTargetRange();
     Rotation2d rotationToTarget = getRotationFromTarget();
 
@@ -353,24 +352,33 @@ public class Drive extends SubsystemBase {
     return maxSpeedMetersPerSec / driveBaseRadius;
   }
 
-  /** description */
-  public void setTarget(int lcr) {
-    
-  }
-
   /** Returns the Hub distance in Meters from the robot. */
   public double getTargetRange() {
     Alliance alliance = DriverStation.getAlliance().orElse(Alliance.Blue);
-
+    Rotation2d heading = getPose().getRotation();
+    ChassisSpeeds fieldSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(getChassisSpeeds(), heading);
+    
     double targetRange;
     double targetX;
     double targetY = MiscMapping.BOTH_Y_HUB_TARGET;
+    double robotVelocityX = fieldSpeeds.vxMetersPerSecond;
+    double robotVelocityY = fieldSpeeds.vyMetersPerSecond;
+    double timeOfFlight = 1.25;
+
+    SmartDashboard.putNumber("vxSpeed", robotVelocityX);
+    SmartDashboard.putNumber("vySpeed", robotVelocityY);
 
     if (alliance == Alliance.Red) {
       targetX = MiscMapping.RED_X_HUB_TARGET;
     } else {
       targetX = MiscMapping.BLUE_X_HUB_TARGET;
     }
+
+    targetX = (targetX + (robotVelocityX * timeOfFlight));
+    targetY = (targetY + (robotVelocityY * timeOfFlight));
+
+    SmartDashboard.putNumber("newX", targetX);
+    SmartDashboard.putNumber("newY", targetY);
 
     targetRange = Math.sqrt(
         Math.pow(targetY - getPose().getY(), 2) +
@@ -382,9 +390,14 @@ public class Drive extends SubsystemBase {
   /** Returns the Rotation2d of the Target from the robot. */
   public Rotation2d getRotationFromTarget() {
     Alliance alliance = DriverStation.getAlliance().orElse(Alliance.Blue);
+    Rotation2d heading = getPose().getRotation();
+    ChassisSpeeds fieldSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(getChassisSpeeds(), heading);
 
     double targetX;
     double targetY = MiscMapping.BOTH_Y_HUB_TARGET;
+    double robotVelocityX = fieldSpeeds.vxMetersPerSecond;
+    double robotVelocityY = fieldSpeeds.vyMetersPerSecond;
+    double timeOfFlight = 1.25;
 
     if (alliance == Alliance.Red) {
       targetX = MiscMapping.RED_X_HUB_TARGET;
@@ -392,27 +405,25 @@ public class Drive extends SubsystemBase {
       targetX = MiscMapping.BLUE_X_HUB_TARGET;
     }
 
+    targetX = (targetX + (robotVelocityX * timeOfFlight));
+    targetY = (targetY + (robotVelocityY * timeOfFlight));
+
     return Rotation2d.fromRadians(Math.atan2((targetY - getPose().getY()), (targetX - getPose().getX())) + Math.PI);
   }
 
   public double getVelocityForTarget() {
     // Ensure we are always using the primitive double
     double d = distanceFromTarget;
-
     // Polynomial shooter model:
-    // v(d) = 5100 - 1600d + 400d²
-//      double velocity = 2700
-  //                    + (-700 * d)
-    //                  + (200 * d * d);
      double velocity = 2300
                      + (-167 * d)
                      + (66.7 * d * d);
-
-
     // Dashboard logging
     SmartDashboard.putNumber("distanceFromTarget", d);
     SmartDashboard.putNumber("setVelocity", velocity);
 
     return velocity;
-}
+  }
+
+
 }

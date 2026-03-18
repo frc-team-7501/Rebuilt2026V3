@@ -111,6 +111,11 @@ public class DriveCommands {
       DoubleSupplier ySupplier,
       Supplier<Rotation2d> rotationSupplier) {
 
+      //create slew limiters for drive control
+      final double ratelimit = 2;
+      final SlewRateLimiter xlimiter = new SlewRateLimiter(ratelimit);
+      final SlewRateLimiter ylimiter = new SlewRateLimiter(ratelimit);
+
     // Create PID controller
     ProfiledPIDController angleController =
         new ProfiledPIDController(
@@ -124,8 +129,16 @@ public class DriveCommands {
     return Commands.run(
             () -> {
               // Get linear velocity
+              double xdrive = xSupplier.getAsDouble();
+              double ydrive = ySupplier.getAsDouble();
+
+              // create inputs to calculate slew limited speeds
+              // divide by three to slow down while aiming.
+              double xinput = xlimiter.calculate(xdrive) / 2;
+              double yinput = ylimiter.calculate(ydrive) / 2;
+
               Translation2d linearVelocity =
-                  getLinearVelocityFromJoysticks(xSupplier.getAsDouble(), ySupplier.getAsDouble());
+                  getLinearVelocityFromJoysticks(xinput, yinput);
 
               // Calculate angular speed
               double omega =
